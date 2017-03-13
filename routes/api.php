@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 //Route::delete($uri, $callback);
 //Route::options($uri, $callback);
 
-Route::post('authenticate', 'UserController@authenticate')->name('api.v1.users.authenticate');
+// Route::post('authenticate', 'UserController@authenticate')->name('api.v1.users.authenticate');
 
 //students
 Route::get('students','StudentController@index')->name('api.v1.students.index');
@@ -26,3 +26,9 @@ Route::get('students/{id}','StudentController@show')->name('api.v1.student.show'
 Route::patch('students/{id}','StudentController@update')->name('api.v1.students.patch');
 Route::delete('students/{id}','StudentController@destroy')->name('api.v1.students.delete');
 //interests
+
+//auth
+//Route::post('users/login', 'Api\v1\UserController@login');
+
+Route::post('users/register', 'Api\v1\UserController@register');
+

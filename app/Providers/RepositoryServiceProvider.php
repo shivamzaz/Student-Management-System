@@ -27,5 +27,6 @@ class RepositoryServiceProvider extends ServiceProvider
   {
     $this->app->bind(Contracts\StudentRepository::class, Db\StudentRepository::class);
     $this->app->bind(Contracts\InterestRepository::class, Db\InterestRepository::class);
+    $this->app->bind(Contracts\UserRepository::class, Db\UserRepository::class);
   }
 }

@@ -46,16 +46,7 @@ trait DbRepositoryTrait
 		return $model;
   }
 
-  /**
-   * Get the model data by adding the given where query.
-   *
-   * @param  string     $column
-   * @param  mixed      $value
-   * @param  array|null $related
-   * @return \Illuminate\Database\Eloquent\Collection
-   *
-   * @throws \App\Exceptions\ModelNotFoundException
-   */
+
   public function getWhere($related = [])
   {
     $query = $this->query();

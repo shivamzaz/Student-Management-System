@@ -37,7 +37,7 @@ class StudentRepository implements StudentRepositoryInterface{
 	//@overide
 	public function update($student, array $inputs)
 	{
-		$student->update($inputs);
+		$student->update($student, $inputs);
 
 		$interests = array_get($inputs, 'interests');
 

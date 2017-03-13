@@ -87,7 +87,7 @@ class Handler extends ExceptionHandler
       case $exception instanceof ModelNotFoundException:
         return response()->error(['message' => $exception->getMessage() ], 404);
       default:
-        return response()->error($exception->getMessage(), 40);
+        return response()->error($exception->getMessage(), 400);
     }
   }
 

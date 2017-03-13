@@ -12,4 +12,5 @@ class UserRepository implements UserRepositoryInterface{
 	protected $model = User::class;
 	
 	use DbRepositoryTrait;	
+
 } 

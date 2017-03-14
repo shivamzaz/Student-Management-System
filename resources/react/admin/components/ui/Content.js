@@ -1,11 +1,10 @@
 import React from 'react';
 
-var Content = React.createClass({
+const Content = React.createClass({
 
   render : function(){
-
     return this.props.children;
   }
 });
 
-module.exports = Content;
+export default Content;

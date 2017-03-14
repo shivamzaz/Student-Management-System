@@ -2,15 +2,12 @@ import React from 'react';
 import Sidebar from './../ui/Sidebar';
 import Content from './../ui/Content';
 
-var AdminLayout = React.createClass({
+var AppLayout = React.createClass({
 
   render : function(){
-    return (
-      <div>
-        <Sidebar/>
-      </div>
-    )
+    
+    return this.props.children;
   }
 });
 
-module.exports = AdminLayout;
+export default AppLayout;

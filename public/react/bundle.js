@@ -25329,6 +25329,10 @@ module.exports = warning;
 },{"_process":44}],233:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -25348,15 +25352,17 @@ var AdminLayout = _react2.default.createClass({
 
 
   render: function render() {
+
     return _react2.default.createElement(
       'div',
-      null,
-      _react2.default.createElement(_Sidebar2.default, null)
+      { id: 'admin' },
+      _react2.default.createElement(_Sidebar2.default, this.props),
+      _react2.default.createElement(_Content2.default, this.props)
     );
   }
 });
 
-module.exports = AdminLayout;
+exports.default = AdminLayout;
 
 },{"./../ui/Content":235,"./../ui/Sidebar":236,"react":230}],234:[function(require,module,exports){
 'use strict';
@@ -25371,11 +25377,377 @@ var StudentList = _react2.default.createClass({
   displayName: 'StudentList',
 
 
+  getInitialState: function getInitialState() {
+    return {
+      students: []
+    };
+  },
+
+  componentWillMount: function componentWillMount() {
+    this.setState({
+      students: [{
+        'name': 'Pawan Kumar'
+      }, {
+        'name': 'Shivam Gupta'
+      }]
+    });
+  },
+
   render: function render() {
     return _react2.default.createElement(
-      'p',
-      null,
-      'list'
+      'div',
+      { id: 'users' },
+      _react2.default.createElement(
+        'div',
+        { id: 'content' },
+        _react2.default.createElement(
+          'div',
+          { className: 'menubar fixed' },
+          _react2.default.createElement(
+            'div',
+            { className: 'sidebar-toggler visible-xs' },
+            _react2.default.createElement('i', { className: 'ion-navicon' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'page-title' },
+            'Customers'
+          ),
+          _react2.default.createElement(
+            'form',
+            { className: 'search hidden-xs' },
+            _react2.default.createElement('i', { className: 'fa fa-search' }),
+            _react2.default.createElement('input', { type: 'text', name: 'q', placeholder: 'Search customers, clients...' }),
+            _react2.default.createElement('input', { type: 'submit' })
+          ),
+          _react2.default.createElement(
+            'a',
+            { href: 'form.html', className: 'new-user btn btn-success pull-right' },
+            _react2.default.createElement(
+              'span',
+              null,
+              'New user'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'content-wrapper' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row page-controls' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12 filters' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'Filter users:'
+              ),
+              _react2.default.createElement(
+                'a',
+                { href: '#' },
+                'All users (243)'
+              ),
+              _react2.default.createElement(
+                'a',
+                { href: '#', className: 'active' },
+                'Active (3)'
+              ),
+              _react2.default.createElement(
+                'a',
+                { href: '#' },
+                'Suspended (8)'
+              ),
+              _react2.default.createElement(
+                'a',
+                { href: '#' },
+                'Prospects'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'show-options' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'dropdown' },
+                  _react2.default.createElement(
+                    'a',
+                    { className: 'button', 'data-toggle': 'dropdown', href: '#' },
+                    _react2.default.createElement(
+                      'span',
+                      null,
+                      'Sort by',
+                      _react2.default.createElement('i', { className: 'fa fa-unsorted' })
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'ul',
+                    { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'dLabel' },
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Name'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Signed up'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Last seen'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Browser'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Country'
+                      )
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'a',
+                  { href: '#', 'data-grid': '.users-list', className: 'grid-view active' },
+                  _react2.default.createElement('i', { className: 'fa fa-th-list' })
+                ),
+                _react2.default.createElement(
+                  'a',
+                  { href: '#', 'data-grid': '.users-grid', className: 'grid-view' },
+                  _react2.default.createElement('i', { className: 'fa fa-th' })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row users-list' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row headers' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-2 header select-users' },
+                  _react2.default.createElement('input', { type: 'checkbox' }),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'dropdown bulk-actions' },
+                    _react2.default.createElement(
+                      'a',
+                      { 'data-toggle': 'dropdown', href: '#' },
+                      'Bulk actions',
+                      _react2.default.createElement('span', { className: 'total-checked' }),
+                      _react2.default.createElement('i', { className: 'fa fa-chevron-down' })
+                    ),
+                    _react2.default.createElement(
+                      'ul',
+                      { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'dLabel' },
+                      _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                          'a',
+                          { href: '#' },
+                          'Add tags'
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                          'a',
+                          { href: '#' },
+                          'Delete users'
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                          'a',
+                          { href: '#' },
+                          'Edit customers'
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                          'a',
+                          { href: '#' },
+                          'Manage permissions'
+                        )
+                      )
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-3 header hidden-xs' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Name'
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-3 header hidden-xs' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Email'
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-2 header hidden-xs' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Total spent'
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-2 header hidden-xs' },
+                  _react2.default.createElement(
+                    'label',
+                    { className: 'text-right' },
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Signed up'
+                    )
+                  )
+                )
+              ),
+              this.state.students.map(function (student) {
+                return _react2.default.createElement(
+                  'div',
+                  { className: 'row user' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-2 avatar' },
+                    _react2.default.createElement('input', { type: 'checkbox', name: 'select-user' }),
+                    _react2.default.createElement('img', { src: '/images/avatars/2.jpg' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-3' },
+                    _react2.default.createElement(
+                      'a',
+                      { href: 'user-profile.html', className: 'name' },
+                      student.name
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-3' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'email' },
+                      'john.39@gmail.com'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-2' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'total-spent' },
+                      '$9,400.00'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-2' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'created-at' },
+                      'Feb 27, 2014'
+                    )
+                  )
+                );
+              }),
+              this.state.students.length == 0 ? _react2.default.createElement(
+                'div',
+                null,
+                'No Student found'
+              ) : false,
+              _react2.default.createElement(
+                'div',
+                { className: 'row pager-wrapper' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-12' },
+                  _react2.default.createElement(
+                    'ul',
+                    { className: 'pager' },
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Previous'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        { href: '#' },
+                        'Next'
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
     );
   }
 });
@@ -25384,6 +25756,10 @@ module.exports = StudentList;
 
 },{"react":230}],235:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _react = require('react');
 
@@ -25396,36 +25772,261 @@ var Content = _react2.default.createClass({
 
 
   render: function render() {
-
     return this.props.children;
   }
 });
 
-module.exports = Content;
+exports.default = Content;
 
 },{"react":230}],236:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var _react = require('react');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Sidebar = _react2.default.createClass({
-  displayName: 'Sidebar',
+  displayName: "Sidebar",
 
 
   render: function render() {
     return _react2.default.createElement(
-      'p',
-      null,
-      'sidebar'
+      "div",
+      { id: "sidebar-default", className: "main-sidebar" },
+      _react2.default.createElement(
+        "div",
+        { className: "current-user" },
+        _react2.default.createElement(
+          "a",
+          { href: "index.html", className: "name" },
+          _react2.default.createElement("img", { className: "avatar", src: "images/avatars/1.jpg" }),
+          _react2.default.createElement(
+            "span",
+            null,
+            "John Smith",
+            _react2.default.createElement("i", { className: "fa fa-chevron-down" })
+          )
+        ),
+        _react2.default.createElement(
+          "ul",
+          { className: "menu" },
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "account-profile.html" },
+              "Account settings"
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "account-billing.html" },
+              "Billing"
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "account-notifications.html" },
+              "Notifications"
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "account-support.html" },
+              "Help / Support"
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "signup.html" },
+              "Sign out"
+            )
+          )
+        )
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "menu-section" },
+        _react2.default.createElement(
+          "h3",
+          null,
+          "General"
+        ),
+        _react2.default.createElement(
+          "ul",
+          null,
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "index.html" },
+              _react2.default.createElement("i", { className: "ion-android-earth" }),
+              _react2.default.createElement(
+                "span",
+                null,
+                "Dashboard"
+              )
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "users.html", className: "active", "data-toggle": "sidebar" },
+              _react2.default.createElement("i", { className: "ion-person-stalker" }),
+              " ",
+              _react2.default.createElement(
+                "span",
+                null,
+                "Lists & Tables"
+              ),
+              _react2.default.createElement("i", { className: "fa fa-chevron-down" })
+            ),
+            _react2.default.createElement(
+              "ul",
+              { className: "submenu" },
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "users.html", className: "active" },
+                  "Customers list"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "datatables.html" },
+                  "Orders (Datatables)"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "search.html" },
+                  "Products (Filters)"
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "users.html", "data-toggle": "sidebar" },
+              _react2.default.createElement("i", { className: "ion-stats-bars" }),
+              " ",
+              _react2.default.createElement(
+                "span",
+                null,
+                "Reports"
+              ),
+              _react2.default.createElement("i", { className: "fa fa-chevron-down" })
+            ),
+            _react2.default.createElement(
+              "ul",
+              { className: "submenu" },
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "reports.html" },
+                  "Reports orders"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "reports-alt.html" },
+                  "Report sales"
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            _react2.default.createElement(
+              "a",
+              { href: "users.html", "data-toggle": "sidebar" },
+              _react2.default.createElement("i", { className: "ion-pricetags" }),
+              " ",
+              _react2.default.createElement(
+                "span",
+                null,
+                "Forms"
+              ),
+              _react2.default.createElement("i", { className: "fa fa-chevron-down" })
+            ),
+            _react2.default.createElement(
+              "ul",
+              { className: "submenu" },
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "form.html" },
+                  "New Customer (validation)"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "form-product.html" },
+                  "New Product (add-ons)"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "wizard.html" },
+                  "Wizard"
+                )
+              )
+            )
+          )
+        )
+      )
     );
   }
 });
 
-module.exports = Sidebar;
+exports.default = Sidebar;
 
 },{"react":230}],237:[function(require,module,exports){
 'use strict';
@@ -25450,7 +26051,7 @@ _reactDom2.default.render(_routes2.default, document.getElementById('app'));
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = require('react');
@@ -25459,36 +26060,34 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _AdminLayout = require('./admin/layouts/AdminLayout');
+var _AdminLayout = require('./admin/components/layouts/AdminLayout.js');
 
 var _AdminLayout2 = _interopRequireDefault(_AdminLayout);
 
-var _StudentList = require('./admin/students/StudentList');
+var _StudentList = require('./admin/components/students/StudentList.js');
 
 var _StudentList2 = _interopRequireDefault(_StudentList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _react2.default.createElement(
-  _reactRouter.Router,
-  { history: _reactRouter.browserHistory },
-  _react2.default.createElement(
-    _reactRouter.Route,
-    { path: 'app' },
+    _reactRouter.Router,
+    { history: _reactRouter.browserHistory },
     _react2.default.createElement(
-      _reactRouter.Route,
-      { component: _AdminLayout2.default },
-      _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'admin' },
+        { path: 'app' },
         _react2.default.createElement(
-          _reactRouter.Route,
-          { path: 'students' },
-          _react2.default.createElement(_reactRouter.IndexRoute, { component: _StudentList2.default })
+            _reactRouter.Route,
+            { path: 'admin', component: _AdminLayout2.default },
+            _react2.default.createElement(
+                _reactRouter.Route,
+                { path: 'students' },
+                _react2.default.createElement(_reactRouter.IndexRoute, { component: _StudentList2.default })
+            )
         )
-      )
     )
-  )
 );
 
-},{"./admin/layouts/AdminLayout":233,"./admin/students/StudentList":234,"react":230,"react-router":199}]},{},[237]);
+// students
+
+},{"./admin/components/layouts/AdminLayout.js":233,"./admin/components/students/StudentList.js":234,"react":230,"react-router":199}]},{},[237]);

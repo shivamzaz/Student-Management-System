@@ -19,9 +19,12 @@ class StudentTransformer extends TransformerAbstract
     {
         return [
           //cases of changing the db ( L - R(real))
-            "id"          => $student->id,
-            "full_name"   => $student->full_name,
-            "address"     => $student->address,
+            "id"            => $student->id,
+            "full_name"     => $student->full_name,
+            "address"       => $student->address,
+            "year"          => $student->year,
+            "interests_ids" => $student->interests->pluck('id')->toArray(),
+            "gender"        => $student->gender
         ];
     }
 

@@ -2,9 +2,9 @@ import React from 'react';
 import Sidebar from './../ui/Sidebar';
 import Content from './../ui/Content';
 
-var AdminLayout = React.createClass({
+class AdminLayout extends React.Component{
 
-  render : function(){
+  render(){
 
     return (
       <div id="admin">
@@ -13,6 +13,6 @@ var AdminLayout = React.createClass({
       </div>
     );
   }
-});
+};
 
 export default AdminLayout;

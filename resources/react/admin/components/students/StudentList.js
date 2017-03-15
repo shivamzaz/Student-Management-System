@@ -1,27 +1,32 @@
 import React from 'react';
+import axios from 'axios';
+import * as config from './../../../config/app';
 
-var StudentList = React.createClass({
+class StudentList extends React.Component{
 
-  getInitialState : function(){
-      return {
-        students : []
-      }
-  },
+  constructor(props) {
+    super(props);
 
-  componentWillMount : function(){
-    this.setState({
-      students : [
-        {
-          'name' : 'Pawan Kumar',
-        },
-        {
-          'name' : 'Shivam Gupta'
-        }
-      ]
+    this.state = {
+      students: []
+    };
+  }
+
+  componentWillMount(){
+
+
+    axios.get(config.base_url + '/api/v1/students')
+    .then(response => {
+      this.setState({
+        students : response.data.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-  },
+  }
 
-  render : function(){
+  render(){
     return (
       <div id="users">
         <div id="content">
@@ -109,14 +114,14 @@ var StudentList = React.createClass({
                 </div>
 
 
-                {this.state.students.map(student => (
-                  <div className="row user">
+                {this.state.students.map((student, index) => (
+                  <div className="row user" key={index}>
                     <div className="col-sm-2 avatar">
                       <input type="checkbox" name="select-user" />
                       <img src="/images/avatars/2.jpg" />
                     </div>
                     <div className="col-sm-3">
-                      <a href="user-profile.html" className="name">{student.name}</a>
+                      <a href="user-profile.html" className="name">{student.full_name}</a>
                     </div>
                     <div className="col-sm-3">
                       <div className="email">john.39@gmail.com</div>
@@ -158,6 +163,6 @@ var StudentList = React.createClass({
       </div>
 );
   }
-});
+};
 
 module.exports = StudentList;

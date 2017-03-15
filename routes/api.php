@@ -26,9 +26,9 @@ Route::get('students/{id}','StudentController@show')->name('api.v1.student.show'
 Route::patch('students/{id}','StudentController@update')->name('api.v1.students.patch');
 Route::delete('students/{id}','StudentController@destroy')->name('api.v1.students.delete');
 //interests
+Route::get('interests','InterestController@getinterests')->name('api.v1.interests');
 
 //auth
 //Route::post('users/login', 'Api\v1\UserController@login');
 
 Route::post('users/register', 'Api\v1\UserController@register');
-

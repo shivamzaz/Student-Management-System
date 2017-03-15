@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Sidebar = React.createClass({
+class Sidebar extends React.Component{
 
-  render : function(){
+  render(){
     return (
       <div id="sidebar-default" className="main-sidebar">
         <div className="current-user">
@@ -32,45 +32,19 @@ const Sidebar = React.createClass({
           </ul>
         </div>
         <div className="menu-section">
-          <h3>General</h3>
+          <h3>Students</h3>
           <ul>
             <li>
               <a href="index.html">
                 <i className="ion-android-earth"></i>
-                <span>Dashboard</span>
+                <span>List All</span>
               </a>
             </li>
             <li>
-              <a href="users.html" className="active" data-toggle="sidebar">
-                <i className="ion-person-stalker"></i> <span>Lists & Tables</span>
-                <i className="fa fa-chevron-down"></i>
+              <a href="index.html">
+                <i className="ion-android-earth"></i>
+                <span>Create</span>
               </a>
-              <ul className="submenu">
-                <li><a href="users.html" className="active">Customers list</a></li>
-                <li><a href="datatables.html">Orders (Datatables)</a></li>
-                <li><a href="search.html">Products (Filters)</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="users.html" data-toggle="sidebar">
-                <i className="ion-stats-bars"></i> <span>Reports</span>
-                <i className="fa fa-chevron-down"></i>
-              </a>
-              <ul className="submenu">
-                <li><a href="reports.html">Reports orders</a></li>
-                <li><a href="reports-alt.html">Report sales</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="users.html" data-toggle="sidebar">
-                <i className="ion-pricetags"></i> <span>Forms</span>
-                <i className="fa fa-chevron-down"></i>
-              </a>
-              <ul className="submenu">
-                <li><a href="form.html">New Customer (validation)</a></li>
-                <li><a href="form-product.html">New Product (add-ons)</a></li>
-                <li><a href="wizard.html">Wizard</a></li>
-              </ul>
             </li>
           </ul>
         </div>
@@ -78,6 +52,6 @@ const Sidebar = React.createClass({
       </div>
     );
   }
-});
+};
 
 export default Sidebar;

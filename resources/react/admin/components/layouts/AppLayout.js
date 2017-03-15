@@ -2,10 +2,10 @@ import React from 'react';
 import Sidebar from './../ui/Sidebar';
 import Content from './../ui/Content';
 
-var AppLayout = React.createClass({
+class Content extends React.Component{
 
   render : function(){
-    
+
     return this.props.children;
   }
 });

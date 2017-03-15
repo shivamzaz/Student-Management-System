@@ -15,16 +15,16 @@ class StudentRepository implements StudentRepositoryInterface{
 	use DbRepositoryTrait;
 
 	//@override
-	
+
 	public function create(array $inputs)
 	{
-		
+
 		$query = $this->query();
 
 		$student = $query->create($inputs);
 
-		// does api user enters interests 
-		
+		// does api user enters interests
+
 		$interests = array_get($inputs, 'interests');
 
 		if($interests)
@@ -37,7 +37,7 @@ class StudentRepository implements StudentRepositoryInterface{
 	//@overide
 	public function update($student, array $inputs)
 	{
-		$student->update($student, $inputs);
+		$student->update($inputs);
 
 		$interests = array_get($inputs, 'interests');
 

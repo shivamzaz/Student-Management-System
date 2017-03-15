@@ -16,7 +16,7 @@ class StudentController extends Controller
   public function index()
   {
   	$students =  $this->studentService->getStudents();
-    
+
     $students = $this->getTransformedData($students, new StudentTransformer);
 
     return response()->success($students);
@@ -36,7 +36,7 @@ class StudentController extends Controller
     $inputs = request()->all();
 
     $student = $this->studentService->create($inputs);
-    
+
     $student = $this->getTransformedData($student, new StudentTransformer);
 
     return response()->success($student);
@@ -50,7 +50,7 @@ class StudentController extends Controller
     $student = $this->studentService->update($inputs , $id);
 
     $student = $this->getTransformedData($student, new StudentTransformer);
-  	
+
     return response()->success($student);
 
   }

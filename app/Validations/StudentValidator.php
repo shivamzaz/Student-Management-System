@@ -21,33 +21,39 @@ class StudentValidator extends Validator{
   }
 
   /**
-   * rules for create
+   * validation rules
    *
+   * @param $type
+   * @param $data
    * @return array
-   'title' => 'required|unique:posts|max:255',
-        'body' => 'required',
    */
-  public function create()
+  protected function rules($type, $data)
   {
-    return [
-      'full_name'  => 'required',
-      'address'    => 'required|max:400',
-      'year'       => 'required',
-      'gender'     => 'required',
-    ];
+    $rules =  [];
+
+    switch($type)
+    {
+      case 'create':
+        $rules = [
+          'full_name'  => 'required',
+          'address'    => 'required|max:400',
+          'year'       => 'required',
+          'gender'     => 'required',
+        ];
+        break;
+
+      case 'update' : 
+         $rules = [
+          'full_name' => 'required',
+          'address'   => 'required|max:400',
+          'year'      => 'required',
+          'gender'    => 'required',
+        ];
+        break;
+
+    }
+    return $rules;
   }
-  // public function index(){
-  //   return [
-  //     ];
-  // }
-  public function update(){
-    return [
-      'full_name'   => 'required',
-      'address' => 'required|max:400',
-      'year' => 'required',
-      'gender' => 'required',
-      ];
-  }  
  
 
 }

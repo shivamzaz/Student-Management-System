@@ -12,7 +12,7 @@ class StudentList extends React.Component{
     };
   }
 
-  componentWillMount(){
+  componentDidMount(){
 
 
     axios.get(config.base_url + '/api/v1/students')

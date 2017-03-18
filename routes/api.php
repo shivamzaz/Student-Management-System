@@ -30,5 +30,14 @@ Route::get('interests','InterestController@getinterests')->name('api.v1.interest
 
 //auth
 //Route::post('users/login', 'Api\v1\UserController@login');
+  /* Login user */
+  Route::post('login', 'UserController@login')->name('api.v1.user.login');
 
-Route::post('users/register', 'Api\v1\UserController@register');
+  /* Register user */
+  Route::post('register', 'UserController@register')->name('api.v1.user.register');
+
+  /* Forgot User Password */
+  Route::post('forgot-password', 'UserController@forgotPassword')->name('api.v1.user.forgetpassword');
+
+  /* Verify Forgot User Password */
+  Route::post('forgot-password/verify', 'UserController@verifyForgotPassword')->name('api.v1.user.forgetpassword');

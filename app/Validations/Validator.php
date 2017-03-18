@@ -25,6 +25,7 @@ abstract class Validator {
    * @param $type
    * @return array
    */
+  
   public function messages($type)
   {
     return [
@@ -39,15 +40,13 @@ abstract class Validator {
    * @return bool
    * @throws ValidationException
    */
-  public function fire($inputs, $type)
+  public function fire($data, $type)
   {
-    $rules = $this->{$type}($inputs);
-
-    $validation = $this->validator->make($inputs, $rules, $this->messages($type));
+    $validation = $this->validator->make($data, $this->rules($type, $data), $this->messages($type) );
 
     $validation->setAttributeNames($this->getAttributeNamesForHuman($type));
 
-    if($validation->fails()) throw new ValidationException($validation, $inputs);
+    if($validation->fails()) throw new ValidationException($validation, $data);
 
     return true;
   }

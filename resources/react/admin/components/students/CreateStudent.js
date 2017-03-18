@@ -134,7 +134,7 @@ var CreateStudent = React.createClass({
                       </div>
                     )}
                 </div>
-                <span className="help-block">{this.state.errors.nterests}</span>
+                <span className="help-block">{this.state.errors.interests}</span>
               </div>
 
   				  	<div className="form-group form-actions">

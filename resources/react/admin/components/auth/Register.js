@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import * as config from './../../../config/app';
 import * as Form from './../../../utils/form';
-import * as localstorage from './../../../utils/localstorage';
-
+//import * as localstorage from './../../../utils/localstorage';
+import { Router } from 'react-router';
+import { browserHistory } from 'react-router';
 
 var Register = React.createClass({
 
@@ -15,6 +16,8 @@ var Register = React.createClass({
 	      errors : {}
 	    }
 	  },
+
+
 
 	  componentWillMount: function(){},
 
@@ -32,28 +35,31 @@ var Register = React.createClass({
 	        password : this.state.password,
 	      })
 	      .then(response => {
-	        console.log(response.data);
-
-					//console.log('shivamthedude', 'heistheDUUUUUDE');
-					//set function
-					localstorage.set('auth_user', response.data.data.user);
+	        // console.log(response.data);
+					console.log(response.data.data.user);
+					// console.log('shivamthedude', 'heistheDUUUUUDE');
+					// //set function
+					//localstorage.set('auth_user', response.data.data.user);
+					localStorage.setItem('auth_user', JSON.stringify(response.data.data.user));
+					browserHistory.push('/app/admin/students');
 	      })
 	      .catch(error => {
+					console.log(error.response.status);
 	        if(error.response.status = 422){
-	        let errors = Form.getFormErrors(error.response.data);
-	        this.setState({
-	          errors : errors
-	        });
-	       }
-	      });
-	  },
+		        let errors = Form.getFormErrors(error.response.data.data);
+		        this.setState({
+		          errors : errors
+		        });
+					}
+	  })
+	},
 
 	render: function(){
     return (
 			<div>
-				<h3>Create Your Account Now</h3>
+				<center><h3>Create Your Account Now</h3></center>
 				<div className="content">
-					<form className="form-horizontal" method="post" action="#" role="form" onSubmit={this._onSubmit} >
+					<form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
 									<div className={Form.formGroupClass(this.state.errors.full_name)}>
 									<strong>Your information</strong>
 									<input className="form-control" type="text" placeholder="full_name" name="full_name" onChange={this._onChange} value={this.state.full_name}/>
@@ -64,15 +70,11 @@ var Register = React.createClass({
 								</div>
 								<div className={Form.formGroupClass(this.state.errors.password)}>
 									<strong>Password</strong>
-									<input className="form-control" type="text" placeholder="Password" name="password" onChange={this._onChange} value={this.state.password}/>
+									<input className="form-control" type="password" placeholder="Password" name="password" onChange={this._onChange} value={this.state.password}/>
 								</div>
-								<div className="form-group form-actions">
-	  				    	<div className="col-sm-offset-2 col-sm-10">
-								<div className="signup">
-									<button type="submit" className="btn btn-success">create acount </button>
+								 <div className="signup">
+									<button type="submit" onClick={this.handlecli} className="btn btn-success">create acount </button>
 								</div>
-							</div>
-						</div>
 					</form>
 				</div>
 			</div>

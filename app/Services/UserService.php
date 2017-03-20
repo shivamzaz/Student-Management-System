@@ -25,7 +25,7 @@ class UserService
 
 	public function register($inputs , UserValidator $validator)
     {
-  		$validator->fire($inputs,'register');
+  		$validator->fire($inputs, 'create');
 
     	$user = $this->userRepo->create($inputs);
 

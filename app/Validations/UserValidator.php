@@ -21,10 +21,9 @@ class UserValidator extends Validator
     {
       case 'create':
         $rules = [
-          'full_name'  =>  'required|min:2|alpha_space',
+          'full_name'  =>  'required|min:2',
           'email' =>  'required|email|unique:users',
-          'password'  =>  'required|min:6|confirmed',
-          'password_confirmation'  =>  'required|min:2',
+          'password'  =>  'required|min:6',
         ];
         break;
 

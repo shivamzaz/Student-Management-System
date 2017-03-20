@@ -1,20 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import * as config from './../../../config/app';
-
-class StudentList extends React.Component{
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      students: []
-    };
-  }
-
+import { Router } from 'react-router';
+import { Link } from 'react-router';
+var StudentList  = React.createClass({
+  getInitialState : function(){
+    return {
+      students: [],
+    }
+  },
   componentDidMount(){
-
-
     axios.get(config.base_url + '/api/v1/students')
     .then(response => {
       this.setState({
@@ -24,8 +19,29 @@ class StudentList extends React.Component{
     .catch(function (error) {
       console.log(error);
     });
-  }
+  },
+// handlecli : function(){
+//   this.state({});
+// },
+_deleteStudent : function(student, event){
 
+  let _this = this;
+
+    confirm('are you sure');
+    axios.delete(config.base_url + '/api/v1/students/' + student.id, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      var students_copy = _this.state.students.slice();
+      var student_index = _this.state.students.indexOf(student);
+      students_copy.splice(student_index, 1);
+      _this.setState({
+        students : students_copy
+      });
+    })
+},
   render(){
     return (
       <div id="users">
@@ -43,11 +59,11 @@ class StudentList extends React.Component{
               <input type="text" name="q" placeholder="Search customers, clients..." />
               <input type="submit" />
             </form>
-            <a href="form.html" className="new-user btn btn-success pull-right">
-              <span>New user</span>
-            </a>
+            <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
+             New User
+           </Link>
+            {/* <button type="submit" onClick={this.handlecli} className="btn btn-success">Log Out </button> */}
           </div>
-
           <div className="content-wrapper">
             <div className="row page-controls">
               <div className="col-md-12 filters">
@@ -67,7 +83,7 @@ class StudentList extends React.Component{
                       </a>
                       <ul className="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li><a href="#">Name</a></li>
-                      <li><a href="#">Signed up</a></li>
+                        <li><a href="#">Signed up</a></li>
                       <li><a href="#">Last seen</a></li>
                       <li><a href="#">Browser</a></li>
                       <li><a href="#">Country</a></li>
@@ -109,7 +125,7 @@ class StudentList extends React.Component{
                     <label><a href="#">Total spent</a></label>
                   </div>
                   <div className="col-sm-2 header hidden-xs">
-                    <label className="text-right"><a href="#">Signed up</a></label>
+                      <label className="text-right"><a href="#">Delete</a></label>
                   </div>
                 </div>
 
@@ -133,7 +149,7 @@ class StudentList extends React.Component{
                     </div>
                     <div className="col-sm-2">
                       <div className="created-at">
-                        Feb 27, 2014
+                        <span className="btn btn-danger" onClick={this._deleteStudent.bind(this, student)}>Delete</span>
                       </div>
                     </div>
                   </div>
@@ -163,6 +179,6 @@ class StudentList extends React.Component{
       </div>
 );
   }
-};
+});
 
 module.exports = StudentList;

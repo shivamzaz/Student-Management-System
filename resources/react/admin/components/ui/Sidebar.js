@@ -1,18 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router';
+import { Router } from 'react-router';
+import { browserHistory } from 'react-router';
 
-class Sidebar extends React.Component{
+var Sidebar = React.createClass({
+
+  _onLogoutBtnClick : function(){
+      localStorage.removeItem("auth_user");
+      browserHistory.push('/app/login');
+  },
 
   render(){
     return (
       <div id="sidebar-default" className="main-sidebar">
         <div className="current-user">
-          <a href="index.html" className="name">
             <img className="avatar" src="images/avatars/1.jpg" />
             <span>
-              John Smith
+              {JSON.parse(localStorage.getItem('auth_user'))["full_name"]}
               <i className="fa fa-chevron-down"></i>
             </span>
-          </a>
           <ul className="menu">
             <li>
               <a href="account-profile.html">Account settings</a>
@@ -31,20 +37,24 @@ class Sidebar extends React.Component{
             </li>
           </ul>
         </div>
+
+        <div className="menu-section">
+          <h3 onClick={this._onLogoutBtnClick}>Logout</h3>
+        </div>
+
+
         <div className="menu-section">
           <h3>Students</h3>
           <ul>
             <li>
-              <a href="index.html">
-                <i className="ion-android-earth"></i>
-                <span>List All</span>
-              </a>
+              <Link to={'/app/admin/students'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
+               List all
+             </Link>
             </li>
             <li>
-              <a href="index.html">
-                <i className="ion-android-earth"></i>
-                <span>Create</span>
-              </a>
+              <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
+               Create
+             </Link>
             </li>
           </ul>
         </div>
@@ -52,6 +62,6 @@ class Sidebar extends React.Component{
       </div>
     );
   }
-};
+});
 
 export default Sidebar;

@@ -14,7 +14,7 @@ var AdminLayout = React.createClass({
 	},
 
 	componentWillMount : function() {
-		if(!localstorage.get('auth_user')){
+		if(!JSON.parse(localStorage.getItem('auth_user'))){
 			browserHistory.push('/app/login');
 		}
 		else{

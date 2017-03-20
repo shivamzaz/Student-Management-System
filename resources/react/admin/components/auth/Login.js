@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import * as config from './../../../config/app';
 import * as Form from './../../../utils/form';
+import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 var Login = React.createClass({
   getInitialState : function(){
@@ -29,6 +31,7 @@ var Login = React.createClass({
       .then(response => {
         console.log(response.data);
         localStorage.setItem('logintoken', JSON.stringify(response.data.user));
+        browserHistory.push('/app/admin/students');
       })
       .catch(error => {
         if(error.response.status = 422){
@@ -43,27 +46,32 @@ var Login = React.createClass({
     return(
       <div>
         <h3>Welcome back!</h3>
-      	<div className="content">
-      		<form className="form-horizontal" method="post" action="#" role="form" onSubmit={this._onSubmit} >>
-      			<div className={Form.formGroupClass(this.state.errors.email)}>
-      				<strong>Email address</strong>
-      				<input className="form-control" type="text" placeholder="email"  name="email" onChange={this._onChange} value={this.state.email}/>
-      			</div>
-      			<div className={Form.formGroupClass(this.state.errors.password)}>
-      				<strong>Password</strong>
-      				<input className="form-control" type="password" placeholder="password" name="password" onChange={this._onChange} value={this.state.password}/>
-      			</div>
-
-            <div className="form-group form-actions">
-            <div className="col-sm-offset-2 col-sm-10">
-             <div className="signup">
+        <div className="content">
+          <form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
+            <div className="fields">
+            <div className={Form.formGroupClass(this.state.errors.email)}>
+             <strong><p>Email address</p></strong>
+              <input className="form-control" type="text" placeholder="email"  name="email" onChange={this._onChange} value={this.state.email}/>
+            </div>
+          </div>
+          <div className="fields">
+            <div className={Form.formGroupClass(this.state.errors.password)}>
+              <strong><p>Password</p></strong>
+              <input className="form-control" type="password" style={{ marginRight : '10px'}} placeholder="password" name="password" onChange={this._onChange} value={this.state.password}/>
+            </div>
+          </div>
+            <div className="actions">
               <button type="submit" className="btn btn-success">Login </button>
              </div>
-            </div>
-      	 </div>
-         </form>
+             <Link to={'/app/register'} style={{ marginRight : '10px'}}>
+              Register
+            </Link>
+              <Link to={'/app/forgot-password'}>
+                Forgot Password ?
+            </Link>
+        </form>
       </div>
-    </div>
+      </div>
     );
  	}
  });

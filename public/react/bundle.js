@@ -26774,7 +26774,7 @@ var Login = _react2.default.createClass({
       password: this.state.password
     }).then(function (response) {
       console.log(response.data);
-      localStorage.setItem('logintoken', JSON.stringify(response.data.user));
+      localStorage.setItem('auth_user', JSON.stringify(response.data.data.user));
       _reactRouter.browserHistory.push('/app/admin/students');
     }).catch(function (error) {
       if (error.response.status = 422) {
@@ -26904,7 +26904,6 @@ var Register = _react2.default.createClass({
 			errors: {}
 		};
 	},
-
 	componentWillMount: function componentWillMount() {},
 
 	// update input state onChange
@@ -27702,6 +27701,19 @@ var StudentList = _react2.default.createClass({
   // handlecli : function(){
   //   this.state({});
   // },
+
+  _handleSearch: function _handleSearch(e) {
+    var _this3 = this;
+
+    _axios2.default.get(config.base_url + '/api/v1/students?q=' + e.target.value).then(function (response) {
+      console.log(response);
+      _this3.setState({
+        students: response.data.data
+      });
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
   _deleteStudent: function _deleteStudent(student, event) {
 
     var _this = this;
@@ -27721,7 +27733,7 @@ var StudentList = _react2.default.createClass({
     });
   },
   render: function render() {
-    var _this3 = this;
+    var _this4 = this;
 
     return _react2.default.createElement(
       'div',
@@ -27740,13 +27752,13 @@ var StudentList = _react2.default.createClass({
           _react2.default.createElement(
             'div',
             { className: 'page-title' },
-            'Customers'
+            'Students'
           ),
           _react2.default.createElement(
             'form',
             { className: 'search hidden-xs' },
             _react2.default.createElement('i', { className: 'fa fa-search' }),
-            _react2.default.createElement('input', { type: 'text', name: 'q', placeholder: 'Search customers, clients...' }),
+            _react2.default.createElement('input', { type: 'text', name: 'q', onChange: this._handleSearch, placeholder: 'Search Students....' }),
             _react2.default.createElement('input', { type: 'submit' })
           ),
           _react2.default.createElement(
@@ -28031,7 +28043,7 @@ var StudentList = _react2.default.createClass({
                       { className: 'created-at' },
                       _react2.default.createElement(
                         'span',
-                        { className: 'btn btn-danger', onClick: _this3._deleteStudent.bind(_this3, student) },
+                        { className: 'btn btn-danger', onClick: _this4._deleteStudent.bind(_this4, student) },
                         'Delete'
                       )
                     )

@@ -14,20 +14,21 @@ class StudentService
     $this->validator = $validator;
     $this->studentRepo = $studentRepo;
   }
-
+// this  belongs to studentservices object
+  
   public function getStudent($id)
   {
     return $this->studentRepo->get($id);
   }
 
-  public function getStudents()
+  public function getStudents($inputs)
   {
-    return $this->studentRepo->all();
+    return $this->studentRepo->search($inputs);
   }
 
   public function getPaginatedStudents($limit, $page)
   {
-    
+
   }
 
   public function create($inputs)

@@ -30,7 +30,7 @@ var Login = React.createClass({
       })
       .then(response => {
         console.log(response.data);
-        localStorage.setItem('logintoken', JSON.stringify(response.data.user));
+        localStorage.setItem('auth_user', JSON.stringify(response.data.data.user));
         browserHistory.push('/app/admin/students');
       })
       .catch(error => {

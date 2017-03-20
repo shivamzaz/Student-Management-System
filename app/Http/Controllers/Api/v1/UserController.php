@@ -30,6 +30,7 @@ class UserController extends Controller
    *
    * @param Request request()
    */
+  
   public function register()
   {
     $inputs = request()->all();

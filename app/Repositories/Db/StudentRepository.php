@@ -14,6 +14,18 @@ class StudentRepository implements StudentRepositoryInterface{
 
 	use DbRepositoryTrait;
 
+	public function search($inputs)
+	{
+		$query = $this->query();
+
+		if(array_get($inputs, 'q'))
+		{
+			$query = $query->where('full_name', 'LIKE', '%' . array_get($inputs, 'q') . '%');
+		}
+
+		return $query->get();
+	}
+
 	//@override
 
 	public function create(array $inputs)

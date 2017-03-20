@@ -16,9 +16,6 @@ var Register = React.createClass({
 	      errors : {}
 	    }
 	  },
-
-
-
 	  componentWillMount: function(){},
 
 	  // update input state onChange

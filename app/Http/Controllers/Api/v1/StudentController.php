@@ -15,7 +15,9 @@ class StudentController extends Controller
 
   public function index()
   {
-  	$students =  $this->studentService->getStudents();
+    $inputs = request()->all();
+
+  	$students =  $this->studentService->getStudents($inputs);
 
     $students = $this->getTransformedData($students, new StudentTransformer);
 

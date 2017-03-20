@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as config from './../../../config/app';
 import { Router } from 'react-router';
 import { Link } from 'react-router';
+
 var StudentList  = React.createClass({
   getInitialState : function(){
     return {
@@ -23,6 +24,19 @@ var StudentList  = React.createClass({
 // handlecli : function(){
 //   this.state({});
 // },
+
+_handleSearch : function(e){
+  axios.get(config.base_url + '/api/v1/students?q='+ e.target.value )
+    .then(response => {
+      console.log(response);
+      this.setState({
+        students : response.data.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+},
 _deleteStudent : function(student, event){
 
   let _this = this;
@@ -52,11 +66,11 @@ _deleteStudent : function(student, event){
             </div>
 
             <div className="page-title">
-              Customers
+              Students
             </div>
             <form className="search hidden-xs">
               <i className="fa fa-search"></i>
-              <input type="text" name="q" placeholder="Search customers, clients..." />
+              <input type="text" name="q" onChange={this._handleSearch} placeholder="Search Students...." />
               <input type="submit" />
             </form>
             <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">

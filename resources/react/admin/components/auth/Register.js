@@ -25,6 +25,8 @@ var Register = React.createClass({
 	   },
 
 	  _onSubmit: function(e){
+
+	  	let _this = this;
 	      e.preventDefault();
 	      axios.post(config.base_url + '/api/v1/register', {  //this.props.routeParams.studentId
 	        full_name : this.state.full_name,
@@ -42,9 +44,10 @@ var Register = React.createClass({
 	      })
 	      .catch(error => {
 					console.log(error.response.status);
-	        if(error.response.status = 422){
-		        let errors = Form.getFormErrors(error.response.data.data);
-		        this.setState({
+					console.log(error.response.data);
+	        if(error.response.status == 422){
+		        let errors = Form.getFormErrors(error.response.data);
+		        _this.setState({
 		          errors : errors
 		        });
 					}
@@ -60,14 +63,18 @@ var Register = React.createClass({
 									<div className={Form.formGroupClass(this.state.errors.full_name)}>
 									<strong>Your information</strong>
 									<input className="form-control" type="text" placeholder="full_name" name="full_name" onChange={this._onChange} value={this.state.full_name}/>
+									<span className="help-block">{this.state.errors.full_name}</span>
 								</div>
 									<div className={Form.formGroupClass(this.state.errors.email)}>
 									<strong>email</strong>
+									
 									<input className="form-control" type="text" placeholder="email" name="email" onChange={this._onChange} value={this.state.email} />
+									<span className="help-block">{this.state.errors.email}</span>
 								</div>
 								<div className={Form.formGroupClass(this.state.errors.password)}>
 									<strong>Password</strong>
 									<input className="form-control" type="password" placeholder="Password" name="password" onChange={this._onChange} value={this.state.password}/>
+									<span className="help-block">{this.state.errors.password}</span>
 								</div>
 								 <div className="signup">
 									<button type="submit" onClick={this.handlecli} className="btn btn-success">create acount </button>

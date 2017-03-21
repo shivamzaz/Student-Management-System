@@ -26782,7 +26782,7 @@ var Login = _react2.default.createClass({
       localStorage.setItem('auth_user', JSON.stringify(response.data.data.user));
       _reactRouter.browserHistory.push('/app/admin/students');
     }).catch(function (error) {
-      if (error.response.status = 422) {
+      if (error.response.status == 422) {
         var errors = Form.getFormErrors(error.response.data);
         _this.setState({
           errors: errors
@@ -26820,7 +26820,12 @@ var Login = _react2.default.createClass({
                   'Email address'
                 )
               ),
-              _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'email', name: 'email', onChange: this._onChange, value: this.state.email })
+              _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'email', name: 'email', onChange: this._onChange, value: this.state.email }),
+              _react2.default.createElement(
+                'span',
+                { className: 'help-block' },
+                this.state.errors.email
+              )
             )
           ),
           _react2.default.createElement(
@@ -26838,7 +26843,12 @@ var Login = _react2.default.createClass({
                   'Password'
                 )
               ),
-              _react2.default.createElement('input', { className: 'form-control', type: 'password', style: { marginRight: '10px' }, placeholder: 'password', name: 'password', onChange: this._onChange, value: this.state.password })
+              _react2.default.createElement('input', { className: 'form-control', type: 'password', style: { marginRight: '10px' }, placeholder: 'password', name: 'password', onChange: this._onChange, value: this.state.password }),
+              _react2.default.createElement(
+                'span',
+                { className: 'help-block' },
+                this.state.errors.password
+              )
             )
           ),
           _react2.default.createElement(
@@ -26918,8 +26928,8 @@ var Register = _react2.default.createClass({
 	},
 
 	_onSubmit: function _onSubmit(e) {
-		var _this = this;
 
+		var _this = this;
 		e.preventDefault();
 		_axios2.default.post(config.base_url + '/api/v1/register', { //this.props.routeParams.studentId
 			full_name: this.state.full_name,
@@ -26935,8 +26945,9 @@ var Register = _react2.default.createClass({
 			_reactRouter.browserHistory.push('/app/admin/students');
 		}).catch(function (error) {
 			console.log(error.response.status);
-			if (error.response.status = 422) {
-				var errors = Form.getFormErrors(error.response.data.data);
+			console.log(error.response.data);
+			if (error.response.status == 422) {
+				var errors = Form.getFormErrors(error.response.data);
 				_this.setState({
 					errors: errors
 				});
@@ -26971,7 +26982,12 @@ var Register = _react2.default.createClass({
 							null,
 							'Your information'
 						),
-						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'full_name', name: 'full_name', onChange: this._onChange, value: this.state.full_name })
+						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'full_name', name: 'full_name', onChange: this._onChange, value: this.state.full_name }),
+						_react2.default.createElement(
+							'span',
+							{ className: 'help-block' },
+							this.state.errors.full_name
+						)
 					),
 					_react2.default.createElement(
 						'div',
@@ -26981,7 +26997,12 @@ var Register = _react2.default.createClass({
 							null,
 							'email'
 						),
-						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'email', name: 'email', onChange: this._onChange, value: this.state.email })
+						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'email', name: 'email', onChange: this._onChange, value: this.state.email }),
+						_react2.default.createElement(
+							'span',
+							{ className: 'help-block' },
+							this.state.errors.email
+						)
 					),
 					_react2.default.createElement(
 						'div',
@@ -26991,7 +27012,12 @@ var Register = _react2.default.createClass({
 							null,
 							'Password'
 						),
-						_react2.default.createElement('input', { className: 'form-control', type: 'password', placeholder: 'Password', name: 'password', onChange: this._onChange, value: this.state.password })
+						_react2.default.createElement('input', { className: 'form-control', type: 'password', placeholder: 'Password', name: 'password', onChange: this._onChange, value: this.state.password }),
+						_react2.default.createElement(
+							'span',
+							{ className: 'help-block' },
+							this.state.errors.password
+						)
 					),
 					_react2.default.createElement(
 						'div',

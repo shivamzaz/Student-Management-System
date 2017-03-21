@@ -38,7 +38,7 @@ var Login = React.createClass({
         browserHistory.push('/app/admin/students');
       })
       .catch(error => {
-        if(error.response.status = 422){
+        if(error.response.status == 422){
         let errors = Form.getFormErrors(error.response.data);
         this.setState({
           errors : errors
@@ -56,12 +56,14 @@ var Login = React.createClass({
             <div className={Form.formGroupClass(this.state.errors.email)}>
              <strong><p>Email address</p></strong>
               <input className="form-control" type="text" placeholder="email"  name="email" onChange={this._onChange} value={this.state.email}/>
+              <span className="help-block">{this.state.errors.email}</span>
             </div>
           </div>
           <div className="fields">
             <div className={Form.formGroupClass(this.state.errors.password)}>
               <strong><p>Password</p></strong>
               <input className="form-control" type="password" style={{ marginRight : '10px'}} placeholder="password" name="password" onChange={this._onChange} value={this.state.password}/>
+              <span className="help-block">{this.state.errors.password}</span>
             </div>
           </div>
             <div className="actions">

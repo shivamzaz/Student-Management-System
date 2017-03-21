@@ -48,9 +48,9 @@ var Login = React.createClass({
   },
   render: function(){
     return(
-      <div>
+      <div id="signin">
         <h3>Welcome back!</h3>
-        <div className="content">
+        <div className="content" id="signin" >
           <form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
             <div className="fields">
             <div className={Form.formGroupClass(this.state.errors.email)}>
@@ -69,12 +69,15 @@ var Login = React.createClass({
             <div className="actions">
               <button type="submit" className="btn btn-success">Login </button>
              </div>
-             <Link to={'/app/register'} style={{ marginRight : '10px'}}>
-              Register
-            </Link>
-              <Link to={'/app/forgot-password'}>
-                Forgot Password ?
-            </Link>
+            <div className="text-center">
+
+              <Link to={'/app/register'} style={{ marginRight : '10px'}}>
+               Register
+             </Link>
+               <Link to={'/app/forgot-password'}>
+                 Forgot Password ?
+             </Link>
+            </div>
         </form>
       </div>
       </div>

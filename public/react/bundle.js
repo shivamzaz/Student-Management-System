@@ -26793,7 +26793,7 @@ var Login = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'div',
-      null,
+      { id: 'signin' },
       _react2.default.createElement(
         'h3',
         null,
@@ -26801,7 +26801,7 @@ var Login = _react2.default.createClass({
       ),
       _react2.default.createElement(
         'div',
-        { className: 'content' },
+        { className: 'content', id: 'signin' },
         _react2.default.createElement(
           'form',
           { className: 'form', method: 'post', action: '#', role: 'form', onSubmit: this._onSubmit },
@@ -26861,14 +26861,18 @@ var Login = _react2.default.createClass({
             )
           ),
           _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/app/register', style: { marginRight: '10px' } },
-            'Register'
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/app/forgot-password' },
-            'Forgot Password ?'
+            'div',
+            { className: 'text-center' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/app/register', style: { marginRight: '10px' } },
+              'Register'
+            ),
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/app/forgot-password' },
+              'Forgot Password ?'
+            )
           )
         )
       )
@@ -26958,7 +26962,7 @@ var Register = _react2.default.createClass({
 	render: function render() {
 		return _react2.default.createElement(
 			'div',
-			null,
+			{ id: 'signin' },
 			_react2.default.createElement(
 				'center',
 				null,
@@ -26995,7 +26999,7 @@ var Register = _react2.default.createClass({
 						_react2.default.createElement(
 							'strong',
 							null,
-							'email'
+							'Email'
 						),
 						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'email', name: 'email', onChange: this._onChange, value: this.state.email }),
 						_react2.default.createElement(
@@ -27021,7 +27025,7 @@ var Register = _react2.default.createClass({
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'signup' },
+						{ className: 'actions' },
 						_react2.default.createElement(
 							'button',
 							{ type: 'submit', onClick: this.handlecli, className: 'btn btn-success' },

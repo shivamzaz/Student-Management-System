@@ -5,7 +5,7 @@
     <title>S M S</title>
      <link rel="shortcut icon" href="{{{ asset('favicon2.png') }}}">
     <link rel="stylesheet" href="{{ asset('css/compiled/theme.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
   </head>
   <body>
     <div id="app"></div>

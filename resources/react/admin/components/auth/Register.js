@@ -56,18 +56,19 @@ var Register = React.createClass({
 
 	render: function(){
     return (
-			<div>
+			<div id="signin">
 				<center><h3>Create Your Account Now</h3></center>
 				<div className="content">
 					<form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
 									<div className={Form.formGroupClass(this.state.errors.full_name)}>
 									<strong>Your information</strong>
+
 									<input className="form-control" type="text" placeholder="full_name" name="full_name" onChange={this._onChange} value={this.state.full_name}/>
 									<span className="help-block">{this.state.errors.full_name}</span>
 								</div>
 									<div className={Form.formGroupClass(this.state.errors.email)}>
-									<strong>email</strong>
-									
+									<strong>Email</strong>
+
 									<input className="form-control" type="text" placeholder="email" name="email" onChange={this._onChange} value={this.state.email} />
 									<span className="help-block">{this.state.errors.email}</span>
 								</div>
@@ -76,7 +77,7 @@ var Register = React.createClass({
 									<input className="form-control" type="password" placeholder="Password" name="password" onChange={this._onChange} value={this.state.password}/>
 									<span className="help-block">{this.state.errors.password}</span>
 								</div>
-								 <div className="signup">
+								 <div className="actions">
 									<button type="submit" onClick={this.handlecli} className="btn btn-success">create acount </button>
 								</div>
 					</form>

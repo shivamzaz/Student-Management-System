@@ -150,6 +150,7 @@ trait DbRepositoryTrait
 	 */
 	protected function query()
 	{
+    //new object model user, student etc.
 		return call_user_func("{$this->model}::query");
 	}
 }

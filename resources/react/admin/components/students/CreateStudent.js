@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import * as config from './../../../config/app';
 import * as Form from './../../../utils/form';
+import { browserHistory } from 'react-router';
 
 var CreateStudent = React.createClass({
 
@@ -47,6 +48,7 @@ var CreateStudent = React.createClass({
       })
       .then(response => {
         console.log(response.data);
+        browserHistory.push('/app/admin/students');
       })
       .catch(error => {
         if(error.response.status = 422){
@@ -57,6 +59,9 @@ var CreateStudent = React.createClass({
        }
       });
   },
+_redirecthome: function(){
+  browserHistory.push('/app/admin/students');
+},
 
   render: function(){
     return (
@@ -139,7 +144,7 @@ var CreateStudent = React.createClass({
 
   				  	<div className="form-group form-actions">
   				    	<div className="col-sm-offset-2 col-sm-10">
-  				    		<a href="form.html" className="btn btn-default">Cancel</a>
+  				    		
   				      		<button type="submit" className="btn btn-success">Save Student </button>
   			    		</div>
   				  	</div>
@@ -148,6 +153,7 @@ var CreateStudent = React.createClass({
   		</div>
     )
 }
+
   });
 
   export default CreateStudent;

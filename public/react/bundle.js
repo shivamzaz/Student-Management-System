@@ -27127,6 +27127,8 @@ var _form = require('./../../../utils/form');
 
 var Form = _interopRequireWildcard(_form);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -27178,6 +27180,7 @@ var CreateStudent = _react2.default.createClass({
       interests: this.state.selected_interests
     }).then(function (response) {
       console.log(response.data);
+      _reactRouter.browserHistory.push('/app/admin/students');
     }).catch(function (error) {
       if (error.response.status = 422) {
         var errors = Form.getFormErrors(error.response.data);
@@ -27186,6 +27189,9 @@ var CreateStudent = _react2.default.createClass({
         });
       }
     });
+  },
+  _redirecthome: function _redirecthome() {
+    _reactRouter.browserHistory.push('/app/admin/students');
   },
 
   render: function render() {
@@ -27372,11 +27378,6 @@ var CreateStudent = _react2.default.createClass({
               'div',
               { className: 'col-sm-offset-2 col-sm-10' },
               _react2.default.createElement(
-                'a',
-                { href: 'form.html', className: 'btn btn-default' },
-                'Cancel'
-              ),
-              _react2.default.createElement(
                 'button',
                 { type: 'submit', className: 'btn btn-success' },
                 'Save Student '
@@ -27387,11 +27388,12 @@ var CreateStudent = _react2.default.createClass({
       )
     );
   }
+
 });
 
 exports.default = CreateStudent;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255}],262:[function(require,module,exports){
+},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27484,6 +27486,8 @@ var StudentsEditForm = _react2.default.createClass({
       interests: this.state.selected_interests
     }).then(function (response) {
       console.log(response.data);
+      confirm(" your data is successfully saved! ");
+      _reactRouter.browserHistory.push('/app/admin/students');
     }).catch(function (error) {
       if (error.response.status = 422) {
         var errors = Form.getFormErrors(error.response.data);
@@ -27678,13 +27682,8 @@ var StudentsEditForm = _react2.default.createClass({
               'div',
               { className: 'col-sm-offset-2 col-sm-10' },
               _react2.default.createElement(
-                'a',
-                { href: 'form.html', className: 'btn btn-default' },
-                'Cancel'
-              ),
-              _react2.default.createElement(
                 'button',
-                { type: 'submit', className: 'btn btn-success', onClick: this._onredirectStud },
+                { type: 'submit', className: 'btn btn-success' },
                 'Save Student '
               )
             )
@@ -27807,7 +27806,7 @@ var StudentList = _react2.default.createClass({
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/app/admin/students/create', style: { marginRight: '10px' }, className: 'new-user btn btn-success pull-right' },
-            'New Student'
+            '+ New Student'
           )
         ),
         _react2.default.createElement(
@@ -28212,7 +28211,7 @@ var Sidebar = _react2.default.createClass({
         _react2.default.createElement(
           'h3',
           null,
-          'Students'
+          'Dashboard'
         ),
         _react2.default.createElement(
           'ul',
@@ -28222,8 +28221,13 @@ var Sidebar = _react2.default.createClass({
             null,
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/app/admin/students', style: { marginRight: '10px' }, className: 'new-user btn btn-success pull-right' },
-              'List all'
+              { to: '/app/admin/students', style: { marginRight: '10px' }, className: 'new-user pull-right' },
+              _react2.default.createElement('i', { className: 'ion-person-stalker' }),
+              _react2.default.createElement(
+                'span',
+                null,
+                'List All'
+              )
             )
           ),
           _react2.default.createElement(
@@ -28231,8 +28235,13 @@ var Sidebar = _react2.default.createClass({
             null,
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/app/admin/students/create', style: { marginRight: '10px' }, className: 'new-user btn btn-success pull-right' },
-              'New Student'
+              { to: '/app/admin/students/create', style: { marginRight: '10px' }, className: 'new-user pull-right' },
+              _react2.default.createElement('i', { className: 'ion-plus-round' }),
+              _react2.default.createElement(
+                'span',
+                null,
+                'New student'
+              )
             )
           ),
           _react2.default.createElement('li', null)

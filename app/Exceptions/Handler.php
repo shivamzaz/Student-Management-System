@@ -44,6 +44,7 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
+     automatic run when throw to exception anywhere, and this place to catch the exception.
      */
     public function render($request, Exception $exception)
     {

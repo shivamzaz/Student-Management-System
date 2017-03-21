@@ -9,3 +9,7 @@
 div#signin {
     padding-bottom: 100px;
 }
+
+#sidebar-default .menu-section ul li a, #sidebar-default .menu-section{
+    background-color: #2a313a;
+}

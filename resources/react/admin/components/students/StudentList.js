@@ -78,7 +78,7 @@ _deleteStudent : function(student, event){
               <input type="submit" />
             </form>
             <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
-             New Student
+             + New Student
            </Link>
             {/* <button type="submit" onClick={this.handlecli} className="btn btn-success">Log Out </button> */}
           </div>

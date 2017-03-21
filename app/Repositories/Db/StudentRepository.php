@@ -21,7 +21,10 @@ class StudentRepository implements StudentRepositoryInterface{
 		if(array_get($inputs, 'q'))
 		{
 			$query = $query->where('full_name', 'LIKE', '%' . array_get($inputs, 'q') . '%');
+			// value regarding to q {dictionery type}
 		}
+
+		//dd($query->toSql()); (this won't give you result if it'll be present.)
 
 		return $query->get();
 	}
@@ -33,7 +36,7 @@ class StudentRepository implements StudentRepositoryInterface{
 
 		$query = $this->query();
 
-		$student = $query->create($inputs);
+		$student = $query->create($inputs); // object return
 
 		// does api user enters interests
 
@@ -41,7 +44,7 @@ class StudentRepository implements StudentRepositoryInterface{
 
 		if($interests)
 		{
-			$student->interests()->sync($interests);
+			$student->interests()->sync($interests); // sync taking the id's of interests
 		}
 
 		return $student;

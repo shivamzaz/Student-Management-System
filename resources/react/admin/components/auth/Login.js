@@ -14,7 +14,11 @@ var Login = React.createClass({
     }
   },
 
-  componentWillMount: function(){},
+  componentWillMount: function(){
+    // you won't let to go login if you are already login
+    if(JSON.parse(localStorage.getItem('auth_user'))){
+      browserHistory.push('/app/admin/students');}
+  },
 
   // update input state onChange
    _onChange: function(e) {

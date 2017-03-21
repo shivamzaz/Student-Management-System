@@ -26757,7 +26757,12 @@ var Login = _react2.default.createClass({
     };
   },
 
-  componentWillMount: function componentWillMount() {},
+  componentWillMount: function componentWillMount() {
+    // you won't let to go login if you are already login
+    if (JSON.parse(localStorage.getItem('auth_user'))) {
+      _reactRouter.browserHistory.push('/app/admin/students');
+    }
+  },
 
   // update input state onChange
   _onChange: function _onChange(e) {
@@ -27379,6 +27384,8 @@ var _form = require('./../../../utils/form');
 
 var Form = _interopRequireWildcard(_form);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -27429,6 +27436,9 @@ var StudentsEditForm = _react2.default.createClass({
   _onChange: function _onChange(e) {
     var new_state = Form.inputOnChange(e, this.state);
     this.setState(new_state);
+  },
+  _onredirectStud: function _onredirectStud() {
+    confirm(" your data is successfully saved! ");
   },
 
   _onSubmit: function _onSubmit(e) {
@@ -27644,7 +27654,7 @@ var StudentsEditForm = _react2.default.createClass({
               ),
               _react2.default.createElement(
                 'button',
-                { type: 'submit', className: 'btn btn-success' },
+                { type: 'submit', className: 'btn btn-success', onClick: this._onredirectStud },
                 'Save Student '
               )
             )
@@ -27657,7 +27667,7 @@ var StudentsEditForm = _react2.default.createClass({
 
 exports.default = StudentsEditForm;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255}],263:[function(require,module,exports){
+},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],263:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -27701,7 +27711,9 @@ var StudentList = _react2.default.createClass({
   // handlecli : function(){
   //   this.state({});
   // },
-
+  _onredirect: function _onredirect(student) {
+    _reactRouter.browserHistory.push('/app/admin/students/' + student.id);
+  },
   _handleSearch: function _handleSearch(e) {
     var _this3 = this;
 
@@ -27709,6 +27721,7 @@ var StudentList = _react2.default.createClass({
       console.log(response);
       _this3.setState({
         students: response.data.data
+        // let to roar it's setting the main students state 
       });
     }).catch(function (error) {
       console.log(error);
@@ -27718,7 +27731,7 @@ var StudentList = _react2.default.createClass({
 
     var _this = this;
 
-    confirm('are you sure');
+    confirm('are you sure ?');
     _axios2.default.delete(config.base_url + '/api/v1/students/' + student.id, {
       headers: {
         'Content-Type': 'application/json'
@@ -27764,7 +27777,7 @@ var StudentList = _react2.default.createClass({
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/app/admin/students/create', style: { marginRight: '10px' }, className: 'new-user btn btn-success pull-right' },
-            'New User'
+            'New Student'
           )
         ),
         _react2.default.createElement(
@@ -27777,46 +27790,11 @@ var StudentList = _react2.default.createClass({
               'div',
               { className: 'col-md-12 filters' },
               _react2.default.createElement(
-                'label',
-                null,
-                'Filter users:'
-              ),
-              _react2.default.createElement(
-                'a',
-                { href: '#' },
-                'All users (243)'
-              ),
-              _react2.default.createElement(
-                'a',
-                { href: '#', className: 'active' },
-                'Active (3)'
-              ),
-              _react2.default.createElement(
-                'a',
-                { href: '#' },
-                'Suspended (8)'
-              ),
-              _react2.default.createElement(
-                'a',
-                { href: '#' },
-                'Prospects'
-              ),
-              _react2.default.createElement(
                 'div',
                 { className: 'show-options' },
                 _react2.default.createElement(
                   'div',
                   { className: 'dropdown' },
-                  _react2.default.createElement(
-                    'a',
-                    { className: 'button', 'data-toggle': 'dropdown', href: '#' },
-                    _react2.default.createElement(
-                      'span',
-                      null,
-                      'Sort by',
-                      _react2.default.createElement('i', { className: 'fa fa-unsorted' })
-                    )
-                  ),
                   _react2.default.createElement(
                     'ul',
                     { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'dLabel' },
@@ -27892,7 +27870,6 @@ var StudentList = _react2.default.createClass({
                 _react2.default.createElement(
                   'div',
                   { className: 'col-sm-2 header select-users' },
-                  _react2.default.createElement('input', { type: 'checkbox' }),
                   _react2.default.createElement(
                     'div',
                     { className: 'dropdown bulk-actions' },
@@ -27967,7 +27944,7 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'a',
                       { href: '#' },
-                      'Email'
+                      'Gender'
                     )
                   )
                 ),
@@ -27980,7 +27957,7 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'a',
                       { href: '#' },
-                      'Total spent'
+                      'Year'
                     )
                   )
                 ),
@@ -27993,7 +27970,7 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'a',
                       { href: '#' },
-                      'Delete'
+                      'Edit  | Delete'
                     )
                   )
                 )
@@ -28005,7 +27982,6 @@ var StudentList = _react2.default.createClass({
                   _react2.default.createElement(
                     'div',
                     { className: 'col-sm-2 avatar' },
-                    _react2.default.createElement('input', { type: 'checkbox', name: 'select-user' }),
                     _react2.default.createElement('img', { src: '/images/avatars/2.jpg' })
                   ),
                   _react2.default.createElement(
@@ -28013,7 +27989,7 @@ var StudentList = _react2.default.createClass({
                     { className: 'col-sm-3' },
                     _react2.default.createElement(
                       'a',
-                      { href: 'user-profile.html', className: 'name' },
+                      { className: 'name' },
                       student.full_name
                     )
                   ),
@@ -28023,7 +27999,7 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'div',
                       { className: 'email' },
-                      'john.39@gmail.com'
+                      student.gender == 1 ? "male" : "female"
                     )
                   ),
                   _react2.default.createElement(
@@ -28032,7 +28008,7 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'div',
                       { className: 'total-spent' },
-                      '$9,400.00'
+                      student.year
                     )
                   ),
                   _react2.default.createElement(
@@ -28041,6 +28017,11 @@ var StudentList = _react2.default.createClass({
                     _react2.default.createElement(
                       'div',
                       { className: 'created-at' },
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'btn btn-primary', onClick: _this4._onredirect.bind(_this4, student) },
+                        'Edit'
+                      ),
                       _react2.default.createElement(
                         'span',
                         { className: 'btn btn-danger', onClick: _this4._deleteStudent.bind(_this4, student) },
@@ -28058,32 +28039,7 @@ var StudentList = _react2.default.createClass({
               _react2.default.createElement(
                 'div',
                 { className: 'row pager-wrapper' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-sm-12' },
-                  _react2.default.createElement(
-                    'ul',
-                    { className: 'pager' },
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Previous'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Next'
-                      )
-                    )
-                  )
-                )
+                _react2.default.createElement('div', { className: 'col-sm-12' })
               )
             )
           )
@@ -28150,12 +28106,16 @@ var Sidebar = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'current-user' },
-        _react2.default.createElement('img', { className: 'avatar', src: 'images/avatars/1.jpg' }),
         _react2.default.createElement(
-          'span',
-          null,
-          JSON.parse(localStorage.getItem('auth_user'))["full_name"],
-          _react2.default.createElement('i', { className: 'fa fa-chevron-down' })
+          'div',
+          { className: 'name' },
+          _react2.default.createElement('img', { className: 'avatar', src: '/images/avatars/1.jpg' }),
+          _react2.default.createElement(
+            'span',
+            null,
+            JSON.parse(localStorage.getItem('auth_user'))["full_name"],
+            _react2.default.createElement('i', { className: 'fa fa-chevron-down' })
+          )
         ),
         _react2.default.createElement(
           'ul',
@@ -28242,9 +28202,10 @@ var Sidebar = _react2.default.createClass({
             _react2.default.createElement(
               _reactRouter.Link,
               { to: '/app/admin/students/create', style: { marginRight: '10px' }, className: 'new-user btn btn-success pull-right' },
-              'Create'
+              'New Student'
             )
-          )
+          ),
+          _react2.default.createElement('li', null)
         )
       )
     );

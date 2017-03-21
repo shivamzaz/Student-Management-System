@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import * as config from './../../../config/app';
 import * as Form from './../../../utils/form';
+import { browserHistory } from 'react-router';
 
 var StudentsEditForm = React.createClass({
 
@@ -49,6 +50,9 @@ var StudentsEditForm = React.createClass({
    _onChange: function(e) {
        var new_state = Form.inputOnChange(e, this.state);
        this.setState(new_state);
+   },
+   _onredirectStud: function(){
+      confirm(" your data is successfully saved! ")
    },
 
   _onSubmit: function(e){
@@ -156,7 +160,7 @@ var StudentsEditForm = React.createClass({
   				  	<div className="form-group form-actions">
   				    	<div className="col-sm-offset-2 col-sm-10">
   				    		<a href="form.html" className="btn btn-default">Cancel</a>
-  				      		<button type="submit" className="btn btn-success">Save Student </button>
+  				      		<button type="submit" className="btn btn-success" onClick={this._onredirectStud}>Save Student </button>
   			    		</div>
   				  	</div>
   				</form>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as config from './../../../config/app';
 import { Router } from 'react-router';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 var StudentList  = React.createClass({
   getInitialState : function(){
@@ -24,13 +25,16 @@ var StudentList  = React.createClass({
 // handlecli : function(){
 //   this.state({});
 // },
-
+_onredirect : function(student){
+  browserHistory.push('/app/admin/students/'+ student.id);
+},
 _handleSearch : function(e){
   axios.get(config.base_url + '/api/v1/students?q='+ e.target.value )
     .then(response => {
       console.log(response);
       this.setState({
         students : response.data.data
+        // let to roar it's setting the main students state 
       });
     })
     .catch(function (error) {
@@ -41,7 +45,7 @@ _deleteStudent : function(student, event){
 
   let _this = this;
 
-    confirm('are you sure');
+    confirm('are you sure ?');
     axios.delete(config.base_url + '/api/v1/students/' + student.id, {
       headers: {
         'Content-Type': 'application/json'
@@ -74,27 +78,18 @@ _deleteStudent : function(student, event){
               <input type="submit" />
             </form>
             <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
-             New User
+             New Student
            </Link>
             {/* <button type="submit" onClick={this.handlecli} className="btn btn-success">Log Out </button> */}
           </div>
           <div className="content-wrapper">
             <div className="row page-controls">
               <div className="col-md-12 filters">
-                <label>Filter users:</label>
-                <a href="#">All users (243)</a>
-                <a href="#" className="active">Active (3)</a>
-                <a href="#">Suspended (8)</a>
-                <a href="#">Prospects</a>
 
                 <div className="show-options">
                   <div className="dropdown">
-                      <a className="button" data-toggle="dropdown" href="#">
-                        <span>
-                          Sort by
-                          <i className="fa fa-unsorted"></i>
-                        </span>
-                      </a>
+                      
+                    
                       <ul className="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <li><a href="#">Name</a></li>
                         <li><a href="#">Signed up</a></li>
@@ -113,7 +108,7 @@ _deleteStudent : function(student, event){
               <div className="col-md-12">
                 <div className="row headers">
                   <div className="col-sm-2 header select-users">
-                    <input type="checkbox" />
+                    
                     <div className="dropdown bulk-actions">
                       <a data-toggle="dropdown" href="#">
                           Bulk actions
@@ -133,36 +128,38 @@ _deleteStudent : function(student, event){
                     <label><a href="#">Name</a></label>
                   </div>
                   <div className="col-sm-3 header hidden-xs">
-                    <label><a href="#">Email</a></label>
+                    <label><a href="#">Gender</a></label>
                   </div>
                   <div className="col-sm-2 header hidden-xs">
-                    <label><a href="#">Total spent</a></label>
+                    <label><a href="#">Year</a></label>
                   </div>
                   <div className="col-sm-2 header hidden-xs">
-                      <label className="text-right"><a href="#">Delete</a></label>
+                      <label className="text-right"><a href="#">Edit  | Delete</a></label>
                   </div>
                 </div>
-
 
                 {this.state.students.map((student, index) => (
                   <div className="row user" key={index}>
                     <div className="col-sm-2 avatar">
-                      <input type="checkbox" name="select-user" />
+                      
                       <img src="/images/avatars/2.jpg" />
                     </div>
                     <div className="col-sm-3">
-                      <a href="user-profile.html" className="name">{student.full_name}</a>
+                      <a  className="name">{student.full_name}</a>
                     </div>
                     <div className="col-sm-3">
-                      <div className="email">john.39@gmail.com</div>
+                      <div className="email">{student.gender==1 ? "male" : "female"}</div>
                     </div>
                     <div className="col-sm-2">
                       <div className="total-spent">
-                        $9,400.00
+                        {student.year}
                       </div>
+
                     </div>
+
                     <div className="col-sm-2">
                       <div className="created-at">
+                      <span className='btn btn-primary' onClick={this._onredirect.bind(this, student)}>Edit</span>
                         <span className="btn btn-danger" onClick={this._deleteStudent.bind(this, student)}>Delete</span>
                       </div>
                     </div>
@@ -177,10 +174,6 @@ _deleteStudent : function(student, event){
 
                 <div className="row pager-wrapper">
                   <div className="col-sm-12">
-                    <ul className="pager">
-                        <li><a href="#">Previous</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
                   </div>
                 </div>
               </div>

@@ -14,11 +14,13 @@ var Sidebar = React.createClass({
     return (
       <div id="sidebar-default" className="main-sidebar">
         <div className="current-user">
-            <img className="avatar" src="images/avatars/1.jpg" />
-            <span>
+              <div className="name">
+                <img className="avatar" src="/images/avatars/1.jpg" />   
+                <span>
               {JSON.parse(localStorage.getItem('auth_user'))["full_name"]}
               <i className="fa fa-chevron-down"></i>
             </span>
+              </div>
           <ul className="menu">
             <li>
               <a href="account-profile.html">Account settings</a>
@@ -53,9 +55,11 @@ var Sidebar = React.createClass({
             </li>
             <li>
               <Link to={'/app/admin/students/create'} style={{ marginRight : '10px'}} className="new-user btn btn-success pull-right">
-               Create
+               New Student
              </Link>
             </li>
+            <li>
+           </li>
           </ul>
         </div>
 

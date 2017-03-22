@@ -26746,6 +26746,167 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var ForgotPasswordView = _react2.default.createClass({
+  displayName: 'ForgotPasswordView',
+
+  getInitialState: function getInitialState() {
+    return {
+      email: "",
+      hash: "",
+      errors: {},
+      flash_message: "",
+      sent: false
+    };
+  },
+
+  componentWillMount: function componentWillMount() {
+    var _this = this;
+    var hash = this.props.routeParams.hash;
+
+    _this.setState({
+      hash: hash
+    });
+
+    if (hash != undefined) {
+      _axios2.default.post(config.base_url + '/api/v1/forgot-password/verify', {
+        hash: hash
+      }).then(function (response) {
+        console.log(response.data);
+        _this.setState({ hash: "", flash_message: "" });
+
+        localStorage.setItem('smsAppApiToken', response.data.apiToken);
+
+        _reactRouter.browserHistory.push('/app/reset-password');
+      }).catch(function (response) {
+        console.log(response);
+      });
+    }
+  },
+
+  _onSubmit: function _onSubmit(e) {
+    e.preventDefault();
+
+    var _this = this;
+    _this.setState({
+      sent: false,
+      errors: {}
+    });
+    _axios2.default.post(config.base_url + '/api/v1/forgot-password', {
+      email: _this.state.email
+    }).then(function (response) {
+      console.log(response.data);
+      _this.setState({
+        sent: true
+      });
+    }).catch(function (response) {
+      console.log(response);
+    });
+  },
+  // update input state onChange
+  _onChange: function _onChange(e) {
+    var new_state = Form.inputOnChange(e, this.state);
+    this.setState(new_state);
+  },
+
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { id: 'signin' },
+      _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-md-4 col-md-offset-4' },
+          _react2.default.createElement(
+            'div',
+            { className: 'panel-heading' },
+            _react2.default.createElement(
+              'h2',
+              { className: 'panel-title' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Forgot your Password ? '
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'panel-body' },
+            this.state.sent ? _react2.default.createElement(
+              'div',
+              { className: 'alert alert-success' },
+              'Email sent to your mail !'
+            ) : false,
+            this.state.flash_message != "" ? _react2.default.createElement(
+              'div',
+              { className: 'alert alert-danger' },
+              this.state.flash_message
+            ) : false,
+            _react2.default.createElement(
+              'div',
+              { className: Form.formGroupClass(this.state.errors.email) },
+              _react2.default.createElement(
+                'label',
+                { className: 'control-label' },
+                'Email'
+              ),
+              _react2.default.createElement('input', { placeholder: 'Email Address', className: 'form-control', name: 'email', value: this.state.email, onChange: this._onChange }),
+              _react2.default.createElement(
+                'span',
+                { className: 'help-block' },
+                this.state.errors.email
+              )
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-success', style: { marginRight: '10px' }, onClick: this._onSubmit },
+              'Send me link'
+            ),
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/login', style: { marginRight: '10px' } },
+              'Login'
+            )
+          )
+        )
+      )
+    );
+  }
+});
+
+exports.default = ForgotPasswordView;
+
+},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _app = require('./../../../config/app');
+
+var config = _interopRequireWildcard(_app);
+
+var _form = require('./../../../utils/form');
+
+var Form = _interopRequireWildcard(_form);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var Login = _react2.default.createClass({
   displayName: 'Login',
 
@@ -26881,7 +27042,7 @@ var Login = _react2.default.createClass({
 });
 exports.default = Login;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
+},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27040,7 +27201,7 @@ var Register = _react2.default.createClass({
 
 exports.default = Register;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
+},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27104,7 +27265,7 @@ var AdminLayout = _react2.default.createClass({
 
 exports.default = AdminLayout;
 
-},{"./../../../utils/localstorage":270,"./../ui/Content":264,"./../ui/Sidebar":265,"react":255,"react-router":224}],261:[function(require,module,exports){
+},{"./../../../utils/localstorage":271,"./../ui/Content":265,"./../ui/Sidebar":266,"react":255,"react-router":224}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27393,7 +27554,7 @@ var CreateStudent = _react2.default.createClass({
 
 exports.default = CreateStudent;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],262:[function(require,module,exports){
+},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27696,7 +27857,7 @@ var StudentsEditForm = _react2.default.createClass({
 
 exports.default = StudentsEditForm;
 
-},{"./../../../config/app":266,"./../../../utils/form":269,"axios":1,"react":255,"react-router":224}],263:[function(require,module,exports){
+},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -28080,7 +28241,7 @@ var StudentList = _react2.default.createClass({
 
 module.exports = StudentList;
 
-},{"./../../../config/app":266,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
+},{"./../../../config/app":267,"axios":1,"react":255,"react-router":224}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28104,7 +28265,7 @@ var Content = _react2.default.createClass({
 
 exports.default = Content;
 
-},{"react":255}],265:[function(require,module,exports){
+},{"react":255}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28253,7 +28414,7 @@ var Sidebar = _react2.default.createClass({
 
 exports.default = Sidebar;
 
-},{"react":255,"react-router":224}],266:[function(require,module,exports){
+},{"react":255,"react-router":224}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28261,7 +28422,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var base_url = exports.base_url = 'http://sms.dev';
 
-},{}],267:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -28280,7 +28441,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _reactDom2.default.render(_routes2.default, document.getElementById('app'));
 
-},{"./routes":268,"react":255,"react-dom":71}],268:[function(require,module,exports){
+},{"./routes":269,"react":255,"react-dom":71}],269:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28317,8 +28478,15 @@ var _Login = require('./admin/components/auth/Login.js');
 
 var _Login2 = _interopRequireDefault(_Login);
 
+var _ForgotPasswordView = require('./admin/components/auth/ForgotPasswordView.js');
+
+var _ForgotPasswordView2 = _interopRequireDefault(_ForgotPasswordView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
+
+// students
 exports.default = _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
@@ -28337,13 +28505,13 @@ exports.default = _react2.default.createElement(
             )
         ),
         _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _Register2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password', component: _ForgotPasswordView2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password/:hash', component: _ForgotPasswordView2.default })
     )
 );
 
-// students
-
-},{"./admin/components/auth/Login.js":258,"./admin/components/auth/Register.js":259,"./admin/components/layouts/AdminLayout.js":260,"./admin/components/students/CreateStudent.js":261,"./admin/components/students/StudentEditForm.js":262,"./admin/components/students/StudentList.js":263,"react":255,"react-router":224}],269:[function(require,module,exports){
+},{"./admin/components/auth/ForgotPasswordView.js":258,"./admin/components/auth/Login.js":259,"./admin/components/auth/Register.js":260,"./admin/components/layouts/AdminLayout.js":261,"./admin/components/students/CreateStudent.js":262,"./admin/components/students/StudentEditForm.js":263,"./admin/components/students/StudentList.js":264,"react":255,"react-router":224}],270:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28411,7 +28579,7 @@ function inputOnChange(e, state) {
   return new_state;
 }
 
-},{}],270:[function(require,module,exports){
+},{}],271:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28450,4 +28618,4 @@ function clear() {
   this.storage.clear();
 }
 
-},{}]},{},[267]);
+},{}]},{},[268]);

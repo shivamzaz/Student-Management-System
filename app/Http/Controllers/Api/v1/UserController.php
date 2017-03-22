@@ -122,7 +122,7 @@ class UserController extends Controller
    */
   public function forgotPassword()
   {
-    $inputs = request()->all();
+    $inputs = request()->all(); 
 
     app()->call([$this->userService, 'forgotPassword'], ['inputs' => $inputs]);
 

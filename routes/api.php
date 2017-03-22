@@ -41,3 +41,12 @@ Route::get('interests','InterestController@getinterests')->name('api.v1.interest
 
   /* Verify Forgot User Password */
   Route::post('forgot-password/verify', 'UserController@verifyForgotPassword')->name('api.v1.user.forgetpassword');
+
+
+  /* API Authentication routes */
+  Route::group(['middleware'  =>  'api.auth'], function () {
+  	Route::group(['middleware'  =>  'auth'], function () {
+
+      Route::post('reset-password', 'UserController@resetPassword')->name('api.v1.user.reset-password');
+  });
+});

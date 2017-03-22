@@ -10,6 +10,8 @@ import CreateStudent from './admin/components/students/CreateStudent.js';
 
 import Register from './admin/components/auth/Register.js';
 import Login from './admin/components/auth/Login.js';
+import ForgotPasswordView from './admin/components/auth/ForgotPasswordView.js'
+// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
 
 export default (
   <Router history={browserHistory}>
@@ -25,6 +27,9 @@ export default (
           </Route>
           <Route path="register" component={Register}/>
           <Route path="login" component={Login}/>
+          <Route path="forgot-password" component={ForgotPasswordView}/>
+          <Route path='forgot-password/:hash' component={ForgotPasswordView} />
+
       </Route>
   </Router>
 );

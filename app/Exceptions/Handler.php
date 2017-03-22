@@ -4,7 +4,14 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\AuthenticationException as BaseAuthenticationException;
+use App\Traits\RestTrait;
+use App\Traits\RestExceptionHandlerTrait;
+use App\Exceptions\ResetPasswordException;
+use App\Exceptions\ChangePasswordException;
+use App\Exceptions\AuthenticationException;
+use App\Exceptions\UserVerificationException;
+use App\Exceptions\ForgotPasswordHashException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Validation\ValidationException as BaseValidationException;
@@ -17,7 +24,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
+        BaseAuthenticationException::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
@@ -87,6 +94,32 @@ class Handler extends ExceptionHandler
 
       case $exception instanceof ModelNotFoundException:
         return response()->error(['message' => $exception->getMessage() ], 404);
+
+      case ($exception  instanceof UserVerificationException):
+          return response()->error(['message' => $exception->getMessage(), 'currentHash' => $exception->currentHash()], 403);
+
+      case ($exception instanceof AuthenticationException):
+          return response()->error(['message' =>  $exception->getMessage(), 'email' =>  $exception->email(),
+            'statusId' =>  $e->statusId(), 'errorCode' =>  $exception->errorCode()], 403);
+
+      case ($exception instanceof ForgotPasswordHashException):
+          return response()->error('Forgot Password Hash Expired', 403);
+
+      case ($exception instanceof ResetPasswordException):
+          return response()->error('Invalid Reset Password Attempt', 403);
+
+      case ($exception instanceof UserNotVerifiedException):
+          return response()->error($exception->getMessage(), 403);
+
+      case ($exception instanceof ChangePasswordException):
+          return response()->error(['message' =>  $exception->getMessage(), 'validations' =>  $exception->errors()], 422);
+
+      case ($exception instanceof InvalidCredentialsException):
+          return response()->error($exception->getMessage(), 401);
+
+      case ($exception instanceof UserSuspendedException):
+          return response()->error($exception->getMessage(), 401);
+          
       default:
         return response()->error($exception->getMessage(), 400);
     }

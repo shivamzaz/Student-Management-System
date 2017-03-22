@@ -12,8 +12,11 @@ use App\Exceptions\ResetPasswordException,
     App\Exceptions\ChangePasswordException,
     App\Exceptions\UserVerificationException,
     App\Exceptions\InvalidCredentialsException,
-    App\Exceptions\ForgotPasswordHashException;
-
+    App\Exceptions\ForgotPasswordHashException,
+    Illuminate\Support\Facades\Mail,
+    App\Mail\UserAccountVerificationEmail,
+    App\Mail\ForgotPasswordEmail;
+    
 class UserService
 {
 	public function __construct(
@@ -97,9 +100,14 @@ class UserService
 
     public function forgotPassword($inputs, UserValidator $validator)
       {
+
         $validator->fire($inputs, 'forgot-password');
 
-        $user = $this->userRepo->getWhere('email', $inputs['email'])->first();
+         // dd($inputs);
+        
+        $user = $this->userRepo->getWhere([ 'email' => $inputs['email']] )->first();
+        // getwhere is taking an array values.
+         // dd($user->toArray());
 
         $this->userRepo->updatePasswordVerificationHash(
           $user,
@@ -107,7 +115,19 @@ class UserService
           getNextWeeksTimestamp(1)
         );
 
+
         $this->sendForgotPasswordEmail($user);
+      }
+
+    public function sendForgotPasswordEmail($user)
+      {
+        Mail::to($user->email)->send(
+          new ForgotPasswordEmail (
+            $user->name,
+            $user->forgot_password_hash
+          )
+        );
+
       }
 
     private function checkAndUpdateToken($user)
@@ -145,8 +165,12 @@ class UserService
           {
             $validator->fire($inputs, 'verify-forgot-password');
 
-            $user = $this->userRepo->getWhere('forgot_password_hash', $inputs['hash'])->first();
+            $user = $this->userRepo->getWhere([
+              'forgot_password_hash' => $inputs['hash']
+              ])->first();
 
+            dd($user->forgot_password_hash_expired_at);
+            
             if (Carbon::now()->gt($user->forgot_password_hash_expired_at)) {
 
               // Forgot Password Hash expired

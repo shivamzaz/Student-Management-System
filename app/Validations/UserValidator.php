@@ -49,8 +49,7 @@ class UserValidator extends Validator
       case 'reset-password':
         $rules = [
           'email' =>  'required|email|exists:users',
-          'password'  =>  'required|min:6|confirmed',
-          'password_confirmation'  =>  'required|min:6'
+          'password'  =>  'required|min:6',
         ];
         break;
 
@@ -62,16 +61,14 @@ class UserValidator extends Validator
 
       case 'password':
         $rules = [
-          'password'  =>  'required|min:6|confirmed',
-          'password_confirmation'  =>  'required|min:6',
+          'password'  =>  'required|min:6'
         ];
         break;
 
       case 'change-password':
         $rules = [
           'current_password' => 'required',
-          'new_password' => 'required|min:6|confirmed',
-          'new_password_confirmation' => 'required|min:6'
+          'new_password' => 'required|min:6',
         ];
         break;
     }

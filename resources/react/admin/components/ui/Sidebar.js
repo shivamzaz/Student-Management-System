@@ -39,7 +39,7 @@ var Sidebar = React.createClass({
             </li>
           </ul>
         </div>
-
+        
         <div className="menu-section">
           <h3 onClick={this._onLogoutBtnClick}>Logout</h3>
         </div>

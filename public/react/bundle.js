@@ -26762,7 +26762,7 @@ var ForgotPasswordView = _react2.default.createClass({
   componentWillMount: function componentWillMount() {
     var _this = this;
     var hash = this.props.routeParams.hash;
-
+    // it'll run from mail user side.
     _this.setState({
       hash: hash
     });
@@ -26773,16 +26773,17 @@ var ForgotPasswordView = _react2.default.createClass({
       }).then(function (response) {
         console.log(response.data);
         _this.setState({ hash: "", flash_message: "" });
-
-        localStorage.setItem('smsAppApiToken', response.data.apiToken);
-
-        _reactRouter.browserHistory.push('/app/reset-password');
+        if (!localStorage.getItem('smsAppApiToken')) {
+          localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
+          // localStorage.getItem('smsAppApiToken')
+          _reactRouter.browserHistory.push('/app/reset-password');
+        }
       }).catch(function (response) {
         console.log(response);
       });
     }
   },
-
+  // come from app side
   _onSubmit: function _onSubmit(e) {
     e.preventDefault();
 
@@ -26804,8 +26805,11 @@ var ForgotPasswordView = _react2.default.createClass({
   },
   // update input state onChange
   _onChange: function _onChange(e) {
-    var new_state = Form.inputOnChange(e, this.state);
-    this.setState(new_state);
+    // let new_state = Form.inputOnChange(e, this.state);
+    // this.setState(new_state);
+    this.setState({
+      email: e.target.value
+    });
   },
 
   render: function render() {
@@ -26866,7 +26870,7 @@ var ForgotPasswordView = _react2.default.createClass({
             ),
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/login', style: { marginRight: '10px' } },
+              { to: '/app/login', style: { marginRight: '10px' } },
               'Login'
             )
           )
@@ -26878,7 +26882,7 @@ var ForgotPasswordView = _react2.default.createClass({
 
 exports.default = ForgotPasswordView;
 
-},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26914,7 +26918,8 @@ var Login = _react2.default.createClass({
     return {
       email: "",
       password: "",
-      errors: {}
+      errors: {},
+      error_message: ""
     };
   },
 
@@ -26933,7 +26938,6 @@ var Login = _react2.default.createClass({
 
   _onSubmit: function _onSubmit(e) {
     var _this = this;
-
     e.preventDefault();
     _axios2.default.post(config.base_url + '/api/v1/login', { //this.props.routeParams.studentId
       email: this.state.email,
@@ -26947,6 +26951,11 @@ var Login = _react2.default.createClass({
         var errors = Form.getFormErrors(error.response.data);
         _this.setState({
           errors: errors
+        });
+      }
+      if (error.response.status == 401) {
+        _this.setState({
+          error_message: error.response.data.errors.message
         });
       }
     });
@@ -26966,6 +26975,11 @@ var Login = _react2.default.createClass({
         _react2.default.createElement(
           'form',
           { className: 'form', method: 'post', action: '#', role: 'form', onSubmit: this._onSubmit },
+          this.state.error_message != "" ? _react2.default.createElement(
+            'div',
+            { className: 'alert alert-danger' },
+            this.state.error_message
+          ) : false,
           _react2.default.createElement(
             'div',
             { className: 'fields' },
@@ -27042,7 +27056,7 @@ var Login = _react2.default.createClass({
 });
 exports.default = Login;
 
-},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27201,7 +27215,143 @@ var Register = _react2.default.createClass({
 
 exports.default = Register;
 
-},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],261:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],261:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _app = require('./../../../config/app');
+
+var config = _interopRequireWildcard(_app);
+
+var _form = require('./../../../utils/form');
+
+var Form = _interopRequireWildcard(_form);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ResetPasswordView = _react2.default.createClass({
+    displayName: 'ResetPasswordView',
+
+
+    getInitialState: function getInitialState() {
+        return {
+            email: "",
+            password: "",
+            errors: {}
+        };
+    },
+    _onSubmit: function _onSubmit(e) {
+        var _this = this;
+        e.preventDefault();
+        _axios2.default.post(config.base_url + '/api/v1/reset-password', { //this.props.routeParams.studentId
+            email: _this.state.email,
+            password: _this.state.password
+        }, {
+            'headers': { 'Authorization': localStorage.getItem('smsAppApiToken') }
+        }).then(function (response) {
+            console.log(response);
+            localStorage.setItem('smsAppApiToken', response.data.data.user.api_token);
+            _reactRouter.browserHistory.push('/app/admin/students');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },
+    _onChange: function _onChange(e) {
+        var new_state = Form.inputOnChange(e, this.state);
+        this.setState(new_state);
+    },
+
+    render: function render() {
+        return _react2.default.createElement(
+            'div',
+            { id: 'sign-in' },
+            _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-4 col-md-offset-4' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'panel-heading' },
+                        _react2.default.createElement(
+                            'h2',
+                            { className: 'panel-title' },
+                            _react2.default.createElement(
+                                'strong',
+                                null,
+                                'Reset your password '
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'panel-body' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: Form.formGroupClass(this.state.errors.email) },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'control-label' },
+                                'Email'
+                            ),
+                            _react2.default.createElement('input', { placeholder: 'Email Address', className: 'form-control', name: 'email', value: this.state.email, onChange: this._onChange }),
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'help-block' },
+                                this.state.errors.email
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: Form.formGroupClass(this.state.errors.password) },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'control-label' },
+                                'Password'
+                            ),
+                            _react2.default.createElement('input', { placeholder: 'Password', type: 'password', className: 'form-control', name: 'password', value: this.state.password, onChange: this._onChange }),
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'help-block' },
+                                this.state.errors.password
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { className: 'btn btn-success', style: { marginRight: '10px' }, onClick: this._onSubmit },
+                            'Submit'
+                        ),
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { to: 'app/login' },
+                            'Login'
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+exports.default = ResetPasswordView;
+
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27265,7 +27415,7 @@ var AdminLayout = _react2.default.createClass({
 
 exports.default = AdminLayout;
 
-},{"./../../../utils/localstorage":271,"./../ui/Content":265,"./../ui/Sidebar":266,"react":255,"react-router":224}],262:[function(require,module,exports){
+},{"./../../../utils/localstorage":272,"./../ui/Content":266,"./../ui/Sidebar":267,"react":255,"react-router":224}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27554,7 +27704,7 @@ var CreateStudent = _react2.default.createClass({
 
 exports.default = CreateStudent;
 
-},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],263:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27857,7 +28007,7 @@ var StudentsEditForm = _react2.default.createClass({
 
 exports.default = StudentsEditForm;
 
-},{"./../../../config/app":267,"./../../../utils/form":270,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],265:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -28241,7 +28391,7 @@ var StudentList = _react2.default.createClass({
 
 module.exports = StudentList;
 
-},{"./../../../config/app":267,"axios":1,"react":255,"react-router":224}],265:[function(require,module,exports){
+},{"./../../../config/app":268,"axios":1,"react":255,"react-router":224}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28265,7 +28415,7 @@ var Content = _react2.default.createClass({
 
 exports.default = Content;
 
-},{"react":255}],266:[function(require,module,exports){
+},{"react":255}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28414,7 +28564,7 @@ var Sidebar = _react2.default.createClass({
 
 exports.default = Sidebar;
 
-},{"react":255,"react-router":224}],267:[function(require,module,exports){
+},{"react":255,"react-router":224}],268:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28422,7 +28572,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var base_url = exports.base_url = 'http://sms.dev';
 
-},{}],268:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -28441,7 +28591,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _reactDom2.default.render(_routes2.default, document.getElementById('app'));
 
-},{"./routes":269,"react":255,"react-dom":71}],269:[function(require,module,exports){
+},{"./routes":270,"react":255,"react-dom":71}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28482,11 +28632,12 @@ var _ForgotPasswordView = require('./admin/components/auth/ForgotPasswordView.js
 
 var _ForgotPasswordView2 = _interopRequireDefault(_ForgotPasswordView);
 
+var _ResetPasswordView = require('./admin/components/auth/ResetPasswordView.js');
+
+var _ResetPasswordView2 = _interopRequireDefault(_ResetPasswordView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
-
-// students
 exports.default = _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
@@ -28507,11 +28658,16 @@ exports.default = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _Register2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password', component: _ForgotPasswordView2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password/:hash', component: _ForgotPasswordView2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password/:hash', component: _ForgotPasswordView2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'reset-password', component: _ResetPasswordView2.default })
     )
 );
+// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
 
-},{"./admin/components/auth/ForgotPasswordView.js":258,"./admin/components/auth/Login.js":259,"./admin/components/auth/Register.js":260,"./admin/components/layouts/AdminLayout.js":261,"./admin/components/students/CreateStudent.js":262,"./admin/components/students/StudentEditForm.js":263,"./admin/components/students/StudentList.js":264,"react":255,"react-router":224}],270:[function(require,module,exports){
+
+// students
+
+},{"./admin/components/auth/ForgotPasswordView.js":258,"./admin/components/auth/Login.js":259,"./admin/components/auth/Register.js":260,"./admin/components/auth/ResetPasswordView.js":261,"./admin/components/layouts/AdminLayout.js":262,"./admin/components/students/CreateStudent.js":263,"./admin/components/students/StudentEditForm.js":264,"./admin/components/students/StudentList.js":265,"react":255,"react-router":224}],271:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28579,7 +28735,7 @@ function inputOnChange(e, state) {
   return new_state;
 }
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28618,4 +28774,4 @@ function clear() {
   this.storage.clear();
 }
 
-},{}]},{},[268]);
+},{}]},{},[269]);

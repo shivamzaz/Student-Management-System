@@ -20,7 +20,7 @@ var ForgotPasswordView = React.createClass({
     componentWillMount : function(){
       let _this = this;
       let hash = this.props.routeParams.hash;
-
+      // it'll run from mail user side.
       _this.setState({
         hash : hash
       });
@@ -33,10 +33,11 @@ var ForgotPasswordView = React.createClass({
 		.then(response => {
 			console.log(response.data);
 			_this.setState({ hash : "", flash_message : ""});
-
-          	localStorage.setItem('smsAppApiToken', response.data.apiToken);
-
-          	browserHistory.push('/app/reset-password');
+            if(!localStorage.getItem('smsAppApiToken')){
+            	localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
+              // localStorage.getItem('smsAppApiToken')
+            	browserHistory.push('/app/reset-password');
+            }
 
 	  })
 	  	.catch(response => {
@@ -45,7 +46,7 @@ var ForgotPasswordView = React.createClass({
 	  }
  
     }, 
-
+    // come from app side
     _onSubmit : function(e){
       e.preventDefault();
 
@@ -55,24 +56,27 @@ var ForgotPasswordView = React.createClass({
         errors : {}
       });
       axios.post(config.base_url + '/api/v1/forgot-password',{
-      	email : _this.state.email
-      })
+		      	email : _this.state.email
+		      })
       .then(response=> {
-      	console.log(response.data);
-      	_this.setState({
-	        sent : true,
-      });
+		      	console.log(response.data);
+		      	_this.setState({
+			        sent : true,
+		      });
 
       })
       .catch(response => {
-        console.log(response);
-      });
+		        console.log(response);
+		      });
 
 },
     // update input state onChange
     _onChange: function (e) {
-        let new_state = Form.inputOnChange(e, this.state);
-        this.setState(new_state);
+        // let new_state = Form.inputOnChange(e, this.state);
+        // this.setState(new_state);
+        this.setState({
+      		email: e.target.value
+    	})
     },
 
 	   render : function(){
@@ -98,7 +102,7 @@ var ForgotPasswordView = React.createClass({
                                   </div>
 
                                   <button className="btn btn-success" style={{ marginRight : '10px'}} onClick={this._onSubmit}>Send me link</button>
-                                  <Link to={`/login`} style={{ marginRight : '10px'}}>
+                                  <Link to={'/app/login'} style={{ marginRight : '10px'}}>
                                     Login
                                   </Link>
 

@@ -10,7 +10,8 @@ var Login = React.createClass({
     return {
       email: "",
       password: "",
-      errors : {}
+      errors : {},
+      error_message : ""
     }
   },
 
@@ -27,6 +28,7 @@ var Login = React.createClass({
    },
 
   _onSubmit: function(e){
+      let _this = this;
       e.preventDefault();
       axios.post(config.base_url + '/api/v1/login', {  //this.props.routeParams.studentId
         email : this.state.email,
@@ -40,8 +42,13 @@ var Login = React.createClass({
       .catch(error => {
         if(error.response.status == 422){
         let errors = Form.getFormErrors(error.response.data);
-        this.setState({
+        _this.setState({
           errors : errors
+        });
+       }
+       if(error.response.status == 401){
+        _this.setState({
+          error_message : error.response.data.errors.message
         });
        }
       });
@@ -52,6 +59,9 @@ var Login = React.createClass({
         <h3>Welcome back!</h3>
         <div className="content" id="signin" >
           <form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
+            { this.state.error_message != "" ? (
+              <div className="alert alert-danger">{this.state.error_message}</div>
+            ) : false}
             <div className="fields">
             <div className={Form.formGroupClass(this.state.errors.email)}>
              <strong><p>Email address</p></strong>

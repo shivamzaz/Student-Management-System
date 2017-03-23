@@ -12,6 +12,7 @@ import Register from './admin/components/auth/Register.js';
 import Login from './admin/components/auth/Login.js';
 import ForgotPasswordView from './admin/components/auth/ForgotPasswordView.js'
 // import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
+ import ResetPasswordView from './admin/components/auth/ResetPasswordView.js'
 
 export default (
   <Router history={browserHistory}>
@@ -29,6 +30,8 @@ export default (
           <Route path="login" component={Login}/>
           <Route path="forgot-password" component={ForgotPasswordView}/>
           <Route path='forgot-password/:hash' component={ForgotPasswordView} />
+          <Route path="reset-password" component={ResetPasswordView}/>
+          
 
       </Route>
   </Router>

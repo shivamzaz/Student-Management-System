@@ -169,7 +169,7 @@ class UserService
               'forgot_password_hash' => $inputs['hash']
               ])->first();
 
-            dd($user->forgot_password_hash_expired_at);
+            //dd($user->forgot_password_hash_expired_at);
             
             if (Carbon::now()->gt($user->forgot_password_hash_expired_at)) {
 

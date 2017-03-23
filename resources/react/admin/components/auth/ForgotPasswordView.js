@@ -13,7 +13,8 @@ var ForgotPasswordView = React.createClass({
         hash : "",
         errors : {},
         flash_message : "",
-        sent : false
+        sent : false,
+        loading : ""
       }
     },
 
@@ -36,7 +37,10 @@ var ForgotPasswordView = React.createClass({
             
             	localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
               // localStorage.getItem('smsAppApiToken')
+              //console.log("hello");
             	browserHistory.push('/app/reset-password');
+            
+
 	  })
 	  	.catch(response => {
         console.log("hello");
@@ -52,7 +56,9 @@ var ForgotPasswordView = React.createClass({
       let _this = this;
       _this.setState({
         sent : false,
-        errors : {}
+        errors : {},
+        loading : true
+
       });
       axios.post(config.base_url + '/api/v1/forgot-password',{
 		      	email : _this.state.email
@@ -61,6 +67,7 @@ var ForgotPasswordView = React.createClass({
 		      	console.log(response.data);
 		      	_this.setState({
 			        sent : true,
+              loading : false
 		      });
 
       })
@@ -99,6 +106,7 @@ var ForgotPasswordView = React.createClass({
                                     <label className="control-label">Email</label>
                                     <input placeholder="Email Address" className="form-control" name="email" value={this.state.email} onChange={this._onChange}/>
                                     <span className="help-block">{this.state.errors.email}</span>
+                                    {this.state.loading==true ? <div> Wait... &#9995; </div>: "" }
                                   </div>
                                   </div>
                                    <div className="actions">

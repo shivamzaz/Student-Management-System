@@ -26755,7 +26755,8 @@ var ForgotPasswordView = _react2.default.createClass({
       hash: "",
       errors: {},
       flash_message: "",
-      sent: false
+      sent: false,
+      loading: ""
     };
   },
 
@@ -26776,6 +26777,7 @@ var ForgotPasswordView = _react2.default.createClass({
 
         localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
         // localStorage.getItem('smsAppApiToken')
+        //console.log("hello");
         _reactRouter.browserHistory.push('/app/reset-password');
       }).catch(function (response) {
         console.log("hello");
@@ -26790,14 +26792,17 @@ var ForgotPasswordView = _react2.default.createClass({
     var _this = this;
     _this.setState({
       sent: false,
-      errors: {}
+      errors: {},
+      loading: true
+
     });
     _axios2.default.post(config.base_url + '/api/v1/forgot-password', {
       email: _this.state.email
     }).then(function (response) {
       console.log(response.data);
       _this.setState({
-        sent: true
+        sent: true,
+        loading: false
       });
     }).catch(function (response) {
       console.log(response);
@@ -26875,7 +26880,12 @@ var ForgotPasswordView = _react2.default.createClass({
                 'span',
                 { className: 'help-block' },
                 this.state.errors.email
-              )
+              ),
+              this.state.loading == true ? _react2.default.createElement(
+                'div',
+                null,
+                ' Wait... \u270B '
+              ) : ""
             )
           ),
           _react2.default.createElement(

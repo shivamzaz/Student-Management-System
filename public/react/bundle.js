@@ -26773,12 +26773,12 @@ var ForgotPasswordView = _react2.default.createClass({
       }).then(function (response) {
         console.log(response.data);
         _this.setState({ hash: "", flash_message: "" });
-        if (!localStorage.getItem('smsAppApiToken')) {
-          localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
-          // localStorage.getItem('smsAppApiToken')
-          _reactRouter.browserHistory.push('/app/reset-password');
-        }
+
+        localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
+        // localStorage.getItem('smsAppApiToken')
+        _reactRouter.browserHistory.push('/app/reset-password');
       }).catch(function (response) {
+        console.log("hello");
         console.log(response);
       });
     }
@@ -26817,37 +26817,51 @@ var ForgotPasswordView = _react2.default.createClass({
       'div',
       { id: 'signin' },
       _react2.default.createElement(
+        'h3',
+        null,
+        _react2.default.createElement(
+          'i',
+          null,
+          'Don\'t Worry \u270B'
+        ),
+        _react2.default.createElement(
+          'b',
+          null,
+          ' We\'re here !'
+        )
+      ),
+      _react2.default.createElement(
         'div',
-        { className: 'container' },
+        { className: 'content', id: 'signin' },
         _react2.default.createElement(
           'div',
-          { className: 'col-md-4 col-md-offset-4' },
+          { className: 'panel-heading' },
           _react2.default.createElement(
-            'div',
-            { className: 'panel-heading' },
+            'h2',
+            { className: 'panel-title' },
             _react2.default.createElement(
-              'h2',
-              { className: 'panel-title' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Forgot your Password ? '
-              )
+              'strong',
+              null,
+              'Forgot your Password ? '
             )
-          ),
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'panel-body' },
+          this.state.sent ? _react2.default.createElement(
+            'div',
+            { className: 'alert alert-success' },
+            'Email sent to your mail !'
+          ) : false,
+          this.state.flash_message != "" ? _react2.default.createElement(
+            'div',
+            { className: 'alert alert-danger' },
+            this.state.flash_message
+          ) : false,
           _react2.default.createElement(
             'div',
-            { className: 'panel-body' },
-            this.state.sent ? _react2.default.createElement(
-              'div',
-              { className: 'alert alert-success' },
-              'Email sent to your mail !'
-            ) : false,
-            this.state.flash_message != "" ? _react2.default.createElement(
-              'div',
-              { className: 'alert alert-danger' },
-              this.state.flash_message
-            ) : false,
+            { className: 'fields' },
             _react2.default.createElement(
               'div',
               { className: Form.formGroupClass(this.state.errors.email) },
@@ -26862,7 +26876,11 @@ var ForgotPasswordView = _react2.default.createClass({
                 { className: 'help-block' },
                 this.state.errors.email
               )
-            ),
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'actions' },
             _react2.default.createElement(
               'button',
               { className: 'btn btn-success', style: { marginRight: '10px' }, onClick: this._onSubmit },
@@ -26882,7 +26900,7 @@ var ForgotPasswordView = _react2.default.createClass({
 
 exports.default = ForgotPasswordView;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],259:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27056,7 +27074,7 @@ var Login = _react2.default.createClass({
 });
 exports.default = Login;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27098,7 +27116,11 @@ var Register = _react2.default.createClass({
 			errors: {}
 		};
 	},
-	componentWillMount: function componentWillMount() {},
+	componentWillMount: function componentWillMount() {
+		if (localStorage.getItem('smsAppApiToken') != undefined) {
+			_reactRouter.browserHistory.push('/app/admin/students');
+		}
+	},
 
 	// update input state onChange
 	_onChange: function _onChange(e) {
@@ -27215,7 +27237,7 @@ var Register = _react2.default.createClass({
 
 exports.default = Register;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],261:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27255,6 +27277,11 @@ var ResetPasswordView = _react2.default.createClass({
             errors: {}
         };
     },
+    // componentWillMount : function(){
+    // 	if(localStorage.getItem('smsAppApiToken')){
+    // 			browserHistory.push('/app/admin/students');
+    // 	}
+    // },
     _onSubmit: function _onSubmit(e) {
         var _this = this;
         e.preventDefault();
@@ -27279,29 +27306,34 @@ var ResetPasswordView = _react2.default.createClass({
     render: function render() {
         return _react2.default.createElement(
             'div',
-            { id: 'sign-in' },
+            { id: 'signin' },
+            _react2.default.createElement(
+                'h3',
+                null,
+                '  '
+            ),
             _react2.default.createElement(
                 'div',
-                { className: 'container' },
+                { className: 'content', id: 'signin' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-md-4 col-md-offset-4' },
+                    { className: 'panel-heading' },
                     _react2.default.createElement(
-                        'div',
-                        { className: 'panel-heading' },
+                        'h2',
+                        { className: 'panel-title' },
                         _react2.default.createElement(
-                            'h2',
-                            { className: 'panel-title' },
-                            _react2.default.createElement(
-                                'strong',
-                                null,
-                                'Reset your password '
-                            )
+                            'strong',
+                            null,
+                            'Reset your password '
                         )
-                    ),
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'panel-body' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-body' },
+                        { className: 'fields' },
                         _react2.default.createElement(
                             'div',
                             { className: Form.formGroupClass(this.state.errors.email) },
@@ -27316,7 +27348,11 @@ var ResetPasswordView = _react2.default.createClass({
                                 { className: 'help-block' },
                                 this.state.errors.email
                             )
-                        ),
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'fields' },
                         _react2.default.createElement(
                             'div',
                             { className: Form.formGroupClass(this.state.errors.password) },
@@ -27331,7 +27367,11 @@ var ResetPasswordView = _react2.default.createClass({
                                 { className: 'help-block' },
                                 this.state.errors.password
                             )
-                        ),
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'actions' },
                         _react2.default.createElement(
                             'button',
                             { className: 'btn btn-success', style: { marginRight: '10px' }, onClick: this._onSubmit },
@@ -27351,7 +27391,7 @@ var ResetPasswordView = _react2.default.createClass({
 
 exports.default = ResetPasswordView;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],262:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27415,7 +27455,7 @@ var AdminLayout = _react2.default.createClass({
 
 exports.default = AdminLayout;
 
-},{"./../../../utils/localstorage":272,"./../ui/Content":266,"./../ui/Sidebar":267,"react":255,"react-router":224}],263:[function(require,module,exports){
+},{"./../../../utils/localstorage":273,"./../ui/Content":266,"./../ui/Sidebar":267,"react":255,"react-router":224}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27704,7 +27744,7 @@ var CreateStudent = _react2.default.createClass({
 
 exports.default = CreateStudent;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27796,9 +27836,15 @@ var StudentsEditForm = _react2.default.createClass({
       gender: this.state.gender,
       interests: this.state.selected_interests
     }).then(function (response) {
-      console.log(response.data);
-      confirm(" your data is successfully saved! ");
-      _reactRouter.browserHistory.push('/app/admin/students');
+      // console.log(response.data);
+      // confirm(" your data is successfully saved! ");
+      Messenger().post({
+        message: 'Student Updated !',
+        type: 'success',
+        showCloseButton: true
+      });
+
+      // browserHistory.push('/app/admin/students');
     }).catch(function (error) {
       if (error.response.status = 422) {
         var errors = Form.getFormErrors(error.response.data);
@@ -28007,7 +28053,7 @@ var StudentsEditForm = _react2.default.createClass({
 
 exports.default = StudentsEditForm;
 
-},{"./../../../config/app":268,"./../../../utils/form":271,"axios":1,"react":255,"react-router":224}],265:[function(require,module,exports){
+},{"./../../../config/app":268,"./../../../utils/form":272,"axios":1,"react":255,"react-router":224}],265:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -28125,81 +28171,6 @@ var StudentList = _react2.default.createClass({
           { className: 'content-wrapper' },
           _react2.default.createElement(
             'div',
-            { className: 'row page-controls' },
-            _react2.default.createElement(
-              'div',
-              { className: 'col-md-12 filters' },
-              _react2.default.createElement(
-                'div',
-                { className: 'show-options' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'dropdown' },
-                  _react2.default.createElement(
-                    'ul',
-                    { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'dLabel' },
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Name'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Signed up'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Last seen'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Browser'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'li',
-                      null,
-                      _react2.default.createElement(
-                        'a',
-                        { href: '#' },
-                        'Country'
-                      )
-                    )
-                  )
-                ),
-                _react2.default.createElement(
-                  'a',
-                  { href: '#', 'data-grid': '.users-list', className: 'grid-view active' },
-                  _react2.default.createElement('i', { className: 'fa fa-th-list' })
-                ),
-                _react2.default.createElement(
-                  'a',
-                  { href: '#', 'data-grid': '.users-grid', className: 'grid-view' },
-                  _react2.default.createElement('i', { className: 'fa fa-th' })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
             { className: 'row users-list' },
             _react2.default.createElement(
               'div',
@@ -28307,11 +28278,7 @@ var StudentList = _react2.default.createClass({
                   _react2.default.createElement(
                     'label',
                     { className: 'text-right' },
-                    _react2.default.createElement(
-                      'a',
-                      { href: '#' },
-                      'Edit  | Delete'
-                    )
+                    'Delete'
                   )
                 )
               ),
@@ -28328,8 +28295,8 @@ var StudentList = _react2.default.createClass({
                     'div',
                     { className: 'col-sm-3' },
                     _react2.default.createElement(
-                      'a',
-                      { className: 'name' },
+                      _reactRouter.Link,
+                      { to: '/app/admin/students/' + student.id, className: 'name' },
                       student.full_name
                     )
                   ),
@@ -28359,12 +28326,7 @@ var StudentList = _react2.default.createClass({
                       { className: 'created-at' },
                       _react2.default.createElement(
                         'span',
-                        { className: 'btn btn-primary', onClick: _this4._onredirect.bind(_this4, student) },
-                        'Edit'
-                      ),
-                      _react2.default.createElement(
-                        'span',
-                        { className: 'btn btn-danger', onClick: _this4._deleteStudent.bind(_this4, student) },
+                        { className: 'btn btn-danger btn-sm', onClick: _this4._deleteStudent.bind(_this4, student) },
                         'Delete'
                       )
                     )
@@ -28375,12 +28337,7 @@ var StudentList = _react2.default.createClass({
                 'div',
                 null,
                 'No Student found'
-              ) : false,
-              _react2.default.createElement(
-                'div',
-                { className: 'row pager-wrapper' },
-                _react2.default.createElement('div', { className: 'col-sm-12' })
-              )
+              ) : false
             )
           )
         )
@@ -28453,57 +28410,7 @@ var Sidebar = _react2.default.createClass({
           _react2.default.createElement(
             'span',
             null,
-            JSON.parse(localStorage.getItem('auth_user'))["full_name"],
-            _react2.default.createElement('i', { className: 'fa fa-chevron-down' })
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'menu' },
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: 'account-profile.html' },
-              'Account settings'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: 'account-billing.html' },
-              'Billing'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: 'account-notifications.html' },
-              'Notifications'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: 'account-support.html' },
-              'Help / Support'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: 'signup.html' },
-              'Sign out'
-            )
+            JSON.parse(localStorage.getItem('auth_user'))["full_name"]
           )
         )
       ),
@@ -28589,6 +28496,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+Messenger.options = {
+	extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+	theme: 'flat'
+};
+
 _reactDom2.default.render(_routes2.default, document.getElementById('app'));
 
 },{"./routes":270,"react":255,"react-dom":71}],270:[function(require,module,exports){
@@ -28636,8 +28548,16 @@ var _ResetPasswordView = require('./admin/components/auth/ResetPasswordView.js')
 
 var _ResetPasswordView2 = _interopRequireDefault(_ResetPasswordView);
 
+var _NotFound = require('./utils/NotFound.js');
+
+var _NotFound2 = _interopRequireDefault(_NotFound);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
+
+
+// students
 exports.default = _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
@@ -28659,15 +28579,44 @@ exports.default = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password', component: _ForgotPasswordView2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'forgot-password/:hash', component: _ForgotPasswordView2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'reset-password', component: _ResetPasswordView2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'reset-password', component: _ResetPasswordView2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
     )
 );
-// import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
 
+},{"./admin/components/auth/ForgotPasswordView.js":258,"./admin/components/auth/Login.js":259,"./admin/components/auth/Register.js":260,"./admin/components/auth/ResetPasswordView.js":261,"./admin/components/layouts/AdminLayout.js":262,"./admin/components/students/CreateStudent.js":263,"./admin/components/students/StudentEditForm.js":264,"./admin/components/students/StudentList.js":265,"./utils/NotFound.js":271,"react":255,"react-router":224}],271:[function(require,module,exports){
+"use strict";
 
-// students
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-},{"./admin/components/auth/ForgotPasswordView.js":258,"./admin/components/auth/Login.js":259,"./admin/components/auth/Register.js":260,"./admin/components/auth/ResetPasswordView.js":261,"./admin/components/layouts/AdminLayout.js":262,"./admin/components/students/CreateStudent.js":263,"./admin/components/students/StudentEditForm.js":264,"./admin/components/students/StudentList.js":265,"react":255,"react-router":224}],271:[function(require,module,exports){
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFound = function NotFound() {
+  return _react2.default.createElement(
+    "div",
+    { className: "not-found-page" },
+    _react2.default.createElement(
+      "h3",
+      null,
+      "404 page not found"
+    ),
+    _react2.default.createElement(
+      "p",
+      null,
+      "We are sorry but the page you are looking for does not exist."
+    )
+  );
+};
+
+exports.default = NotFound;
+
+},{"react":255}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28735,7 +28684,7 @@ function inputOnChange(e, state) {
   return new_state;
 }
 
-},{}],272:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

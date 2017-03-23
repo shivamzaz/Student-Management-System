@@ -13,6 +13,7 @@ import Login from './admin/components/auth/Login.js';
 import ForgotPasswordView from './admin/components/auth/ForgotPasswordView.js'
 // import VerifyAccountView from './admin/components/auth/VerifyAccountView.js'
  import ResetPasswordView from './admin/components/auth/ResetPasswordView.js'
+ import NotFound from './utils/NotFound.js'
 
 export default (
   <Router history={browserHistory}>
@@ -23,6 +24,7 @@ export default (
                 <IndexRoute component={StudentList} />
                 <Route path="create" component={CreateStudent} />
                 <Route path=":studentId" component={StudentEditForm} />
+
               </Route>
               {/*authentication*/}
           </Route>
@@ -31,7 +33,7 @@ export default (
           <Route path="forgot-password" component={ForgotPasswordView}/>
           <Route path='forgot-password/:hash' component={ForgotPasswordView} />
           <Route path="reset-password" component={ResetPasswordView}/>
-          
+          <Route path="*" component={NotFound} />
 
       </Route>
   </Router>

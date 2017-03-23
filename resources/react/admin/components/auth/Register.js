@@ -16,7 +16,11 @@ var Register = React.createClass({
 	      errors : {}
 	    }
 	  },
-	  componentWillMount: function(){},
+	  componentWillMount: function(){
+	  	if(localStorage.getItem('smsAppApiToken')!=undefined){
+    			browserHistory.push('/app/admin/students');
+    	}
+	  },
 
 	  // update input state onChange
 	   _onChange: function(e) {

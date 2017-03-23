@@ -14,6 +14,11 @@ var ResetPasswordView = React.createClass({
           errors : {}
         }
     },
+    // componentWillMount : function(){
+    // 	if(localStorage.getItem('smsAppApiToken')){
+    // 			browserHistory.push('/app/admin/students');
+    // 	}
+    // },
     _onSubmit : function(e){
     	let _this = this;
     	e.preventDefault();
@@ -40,32 +45,38 @@ var ResetPasswordView = React.createClass({
 
     render : function(){
         return (
-            <div id="sign-in">
-                <div className="container">
-                    <div className="col-md-4 col-md-offset-4">
+        <div id="signin">
+        			<h3>  </h3>
+                      <div className="content" id="signin" >
                           <div className="panel-heading"><h2 className="panel-title"><strong>Reset your password </strong></h2></div>
                           <div className="panel-body">
-
+                          <div className="fields">
                                 <div className={Form.formGroupClass(this.state.errors.email)}>
                                   <label className="control-label">Email</label>
                                   <input placeholder="Email Address" className="form-control" name="email" value={this.state.email} onChange={this._onChange}/>
                                   <span className="help-block">{this.state.errors.email}</span>
                                 </div>
-
+                           </div>
+                           <div className="fields">
                                 <div className={Form.formGroupClass(this.state.errors.password)}>
                                   <label className="control-label">Password</label>
                                   <input placeholder="Password" type="password" className="form-control" name="password" value={this.state.password} onChange={this._onChange}/>
                                   <span className="help-block">{this.state.errors.password}</span>
                                 </div>
+                           </div>
+                            <div className="actions">
                                 <button className="btn btn-success" style={{ marginRight : '10px'}} onClick={this._onSubmit}>Submit</button>
                                 <Link to={'app/login'}>
                                   Login
                                 </Link>
+                            </div>
 
-                          </div>
 
                       </div>
                   </div>
+
+
+                 
             </div>
         );
     }

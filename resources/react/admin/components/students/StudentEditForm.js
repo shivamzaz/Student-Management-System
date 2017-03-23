@@ -66,9 +66,16 @@ var StudentsEditForm = React.createClass({
         interests : this.state.selected_interests
       })
       .then(response => {
-        console.log(response.data);
-        confirm(" your data is successfully saved! ")
-        browserHistory.push('/app/admin/students');
+        // console.log(response.data);
+        // confirm(" your data is successfully saved! ");
+         Messenger().post({
+             message: 'Student Updated !',
+             type: 'success',
+             showCloseButton: true
+           });
+            
+            
+        // browserHistory.push('/app/admin/students');
       })
       .catch(error => {
         if(error.response.status = 422){

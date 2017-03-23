@@ -33,14 +33,13 @@ var ForgotPasswordView = React.createClass({
 		.then(response => {
 			console.log(response.data);
 			_this.setState({ hash : "", flash_message : ""});
-            if(!localStorage.getItem('smsAppApiToken')){
+            
             	localStorage.setItem('smsAppApiToken', response.data.data.apiToken);
               // localStorage.getItem('smsAppApiToken')
             	browserHistory.push('/app/reset-password');
-            }
-
 	  })
 	  	.catch(response => {
+        console.log("hello");
         console.log(response);
       });
 	  }
@@ -82,8 +81,9 @@ var ForgotPasswordView = React.createClass({
 	   render : function(){
         return (
             <div id="signin">
-                  <div className="container">
-                      <div className="col-md-4 col-md-offset-4">
+                      <h3 ><i>Don't Worry &#9995;</i><b> We're here !</b></h3>
+                      <div className="content" id="signin" >
+                      
                             <div className="panel-heading"><h2 className="panel-title"><strong>Forgot your Password ? </strong></h2></div>
                             <div className="panel-body">
 
@@ -94,17 +94,19 @@ var ForgotPasswordView = React.createClass({
                                   { this.state.flash_message != "" ? (
                                     <div className="alert alert-danger">{this.state.flash_message}</div>
                                   ) : false }
-
+                                <div className="fields">
                                   <div className={Form.formGroupClass(this.state.errors.email)}>
                                     <label className="control-label">Email</label>
                                     <input placeholder="Email Address" className="form-control" name="email" value={this.state.email} onChange={this._onChange}/>
                                     <span className="help-block">{this.state.errors.email}</span>
                                   </div>
-
+                                  </div>
+                                   <div className="actions">
                                   <button className="btn btn-success" style={{ marginRight : '10px'}} onClick={this._onSubmit}>Send me link</button>
                                   <Link to={'/app/login'} style={{ marginRight : '10px'}}>
                                     Login
                                   </Link>
+                                  
 
                             </div>
 

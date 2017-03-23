@@ -83,27 +83,7 @@ _deleteStudent : function(student, event){
             {/* <button type="submit" onClick={this.handlecli} className="btn btn-success">Log Out </button> */}
           </div>
           <div className="content-wrapper">
-            <div className="row page-controls">
-              <div className="col-md-12 filters">
-
-                <div className="show-options">
-                  <div className="dropdown">
-                      
-                    
-                      <ul className="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li><a href="#">Name</a></li>
-                        <li><a href="#">Signed up</a></li>
-                      <li><a href="#">Last seen</a></li>
-                      <li><a href="#">Browser</a></li>
-                      <li><a href="#">Country</a></li>
-                      </ul>
-                  </div>
-                  <a href="#" data-grid=".users-list" className="grid-view active"><i className="fa fa-th-list"></i></a>
-                  <a href="#" data-grid=".users-grid" className="grid-view"><i className="fa fa-th"></i></a>
-                </div>
-              </div>
-            </div>
-
+            
             <div className="row users-list">
               <div className="col-md-12">
                 <div className="row headers">
@@ -134,7 +114,7 @@ _deleteStudent : function(student, event){
                     <label><a href="#">Year</a></label>
                   </div>
                   <div className="col-sm-2 header hidden-xs">
-                      <label className="text-right"><a href="#">Edit  | Delete</a></label>
+                      <label className="text-right">Delete</label>
                   </div>
                 </div>
 
@@ -145,7 +125,7 @@ _deleteStudent : function(student, event){
                       <img src="/images/avatars/2.jpg" />
                     </div>
                     <div className="col-sm-3">
-                      <a  className="name">{student.full_name}</a>
+                      <Link to={`/app/admin/students/${student.id}`}  className="name">{student.full_name}</Link>
                     </div>
                     <div className="col-sm-3">
                       <div className="email">{student.gender==1 ? "male" : "female"}</div>
@@ -159,8 +139,7 @@ _deleteStudent : function(student, event){
 
                     <div className="col-sm-2">
                       <div className="created-at">
-                      <span className='btn btn-primary' onClick={this._onredirect.bind(this, student)}>Edit</span>
-                        <span className="btn btn-danger" onClick={this._deleteStudent.bind(this, student)}>Delete</span>
+                        <span className="btn btn-danger btn-sm" onClick={this._deleteStudent.bind(this, student)}>Delete</span>
                       </div>
                     </div>
                   </div>
@@ -170,12 +149,6 @@ _deleteStudent : function(student, event){
                   <div>No Student found</div>
                 ) : false }
 
-
-
-                <div className="row pager-wrapper">
-                  <div className="col-sm-12">
-                  </div>
-                </div>
               </div>
 
             </div>

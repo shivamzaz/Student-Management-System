@@ -13,3 +13,11 @@ div#signin {
 #sidebar-default .menu-section ul li a, #sidebar-default .menu-section{
     background-color: #2a313a;
 }
+
+.not-found-page{
+	text-align: center;
+}
+
+.not-found-page h3{
+	padding-top: 100px;
+}

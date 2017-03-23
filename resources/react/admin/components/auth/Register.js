@@ -20,6 +20,9 @@ var Register = React.createClass({
 	  	if(localStorage.getItem('smsAppApiToken')!=undefined){
     			browserHistory.push('/app/admin/students');
     	}
+    	// cant let to go if oyu already logged in
+    	if(JSON.parse(localStorage.getItem('auth_user'))){
+      		browserHistory.push('/app/admin/students');}
 	  },
 
 	  // update input state onChange
@@ -61,7 +64,7 @@ var Register = React.createClass({
 	render: function(){
     return (
 			<div id="signin">
-				<center><h3>Create Your Account Now</h3></center>
+				<center><h3>Create Your Account Now in SMS</h3></center>
 				<div className="content">
 					<form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
 									<div className={Form.formGroupClass(this.state.errors.full_name)}>

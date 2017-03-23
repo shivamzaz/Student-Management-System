@@ -56,7 +56,7 @@ var Login = React.createClass({
   render: function(){
     return(
       <div id="signin">
-        <h3>Welcome back!</h3>
+        <h3>Welcome back in SMS!</h3>
         <div className="content" id="signin" >
           <form className="form" method="post" action="#" role="form" onSubmit={this._onSubmit} >
             { this.state.error_message != "" ? (

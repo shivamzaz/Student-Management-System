@@ -26995,7 +26995,7 @@ var Login = _react2.default.createClass({
       _react2.default.createElement(
         'h3',
         null,
-        'Welcome back!'
+        'Welcome back in SMS!'
       ),
       _react2.default.createElement(
         'div',
@@ -27130,6 +27130,10 @@ var Register = _react2.default.createClass({
 		if (localStorage.getItem('smsAppApiToken') != undefined) {
 			_reactRouter.browserHistory.push('/app/admin/students');
 		}
+		// cant let to go if oyu already logged in
+		if (JSON.parse(localStorage.getItem('auth_user'))) {
+			_reactRouter.browserHistory.push('/app/admin/students');
+		}
 	},
 
 	// update input state onChange
@@ -27176,7 +27180,7 @@ var Register = _react2.default.createClass({
 				_react2.default.createElement(
 					'h3',
 					null,
-					'Create Your Account Now'
+					'Create Your Account Now in SMS'
 				)
 			),
 			_react2.default.createElement(

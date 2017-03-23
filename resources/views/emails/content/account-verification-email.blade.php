@@ -1,5 +1,5 @@
 <?php
-$main_heading = "Hello, " . $userName;
+$main_heading = "Hello, ";
 $sub_heading = "We welcome you to " . env('APP_NAME');
 $header_text = "Please verify your account.";
 
@@ -7,8 +7,8 @@ $message = "Click on the button below to verify.";
 $sub_message_heading = "Here are just some of the ways in which you can use this app.";
 
 $sub_message = '<ul>'.
-  '<li>Create Polls</li>'.
-  '<li>Vote on other Polls</li>'.
+  '<li>Create Students</li>'.
+  '<li>Access to other Students</li>'.
   '</ul>';
 
 $footer_message = "P.S: We hate spam too.";

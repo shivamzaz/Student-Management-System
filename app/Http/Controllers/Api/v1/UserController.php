@@ -32,6 +32,7 @@ class UserController extends Controller
    */
   
   public function register()
+  
   {
     $inputs = request()->all();
 

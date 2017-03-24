@@ -20,15 +20,15 @@ use Illuminate\Http\Request;
 // Route::post('authenticate', 'UserController@authenticate')->name('api.v1.users.authenticate');
 
 //students
-Route::get('students','StudentController@index')->name('api.v1.students.index');
-Route::post('students', 'StudentController@create')->name('api.v1.students.create');
-Route::get('students/{id}','StudentController@show')->name('api.v1.student.show');
-Route::patch('students/{id}','StudentController@update')->name('api.v1.students.patch');
-Route::delete('students/{id}','StudentController@destroy')->name('api.v1.students.delete');
-//interests
-Route::get('interests','InterestController@getinterests')->name('api.v1.interests');
+ Route::get('students','StudentController@index')->name('api.v1.students.index');
+// Route::post('students', 'StudentController@create')->name('api.v1.students.create');
+ Route::get('students/{id}','StudentController@show')->name('api.v1.student.show');
+// Route::patch('students/{id}','StudentController@update')->name('api.v1.students.patch');
+// Route::delete('students/{id}','StudentController@destroy')->name('api.v1.students.delete');
+// //interests 
+ Route::get('interests','InterestController@getinterests')->name('api.v1.interests');
 
-//auth
+// //auth
 //Route::post('users/login', 'Api\v1\UserController@login');
   /* Login user */
   Route::post('login', 'UserController@login')->name('api.v1.user.login');
@@ -46,6 +46,13 @@ Route::get('interests','InterestController@getinterests')->name('api.v1.interest
   /* API Authentication routes */
   Route::group(['middleware'  =>  'api.auth'], function () {
   	Route::group(['middleware'  =>  'auth'], function () {
+      //Route::get('students','StudentController@index')->name('api.v1.students.index');
+        Route::post('students', 'StudentController@create')->name('api.v1.students.create');
+        //Route::get('students/{id}','StudentController@show')->name('api.v1.student.show');
+        Route::patch('students/{id}','StudentController@update')->name('api.v1.students.patch');
+        Route::delete('students/{id}','StudentController@destroy')->name('api.v1.students.delete');
+        //interests
+       // Route::get('interests','InterestController@getinterests')->name('api.v1.interests');
 
       Route::post('reset-password', 'UserController@resetPassword')->name('api.v1.user.reset-password');
   });

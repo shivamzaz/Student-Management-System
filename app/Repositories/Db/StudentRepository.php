@@ -41,11 +41,11 @@ class StudentRepository implements StudentRepositoryInterface{
 		// does api user enters interests
 
 		$interests = array_get($inputs, 'interests');
+		
+		// don;t use it if($interests)
 
-		if($interests)
-		{
-			$student->interests()->sync($interests); // sync taking the id's of interests
-		}
+		$student->interests()->sync($interests); // sync taking the id's of interests
+		
 
 		return $student;
 	}
@@ -54,12 +54,11 @@ class StudentRepository implements StudentRepositoryInterface{
 	{
 		$student->update($inputs);
 
-		$interests = array_get($inputs, 'interests');
+		$interests = array_get($inputs, 'interests', []);
 
-		if($interests)
-		{
-			$student->interests()->sync($interests);
-		}
+		
+		$student->interests()->sync($interests);
+		
 
 		return $student;
 	}
